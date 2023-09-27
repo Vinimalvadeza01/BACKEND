@@ -7,6 +7,6 @@ const con = await mysql.createConnection({
     database:process.env.MYSQL_DB
 })
 
-console.log('BD conectada       ')
+console.log('BD conectada')
 
 export {con}

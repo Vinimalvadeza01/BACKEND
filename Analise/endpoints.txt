@@ -1,0 +1,54 @@
+(1)  /POST       /usuario/login
+
+request body
+{
+    "email": "",
+    "senha": ""
+}
+
+response
+{
+    "id": 0,
+    "email": "",
+    "nome": ""
+}
+
+
+
+(2) /POST /cliente
+
+request body
+{
+    "cliente": "0",     
+    "nome":  "", 
+    "email": "",           
+    "cpf":  ""        
+    "datanasc": "2000-10-10"         
+    "senha": ""       
+    "endereco": "0" 
+}
+
+response (200)
+{
+    "cliente": "0",     
+    "nome":  "", 
+    "email": "",           
+    "cpf":  ""        
+    "datanasc": "2000-10-10"         
+    "senha": ""       
+    "endereco": "0" 
+}
+
+(3) /POST /loginAdm
+
+request body
+
+{
+    
+}
+response (200)
+{
+    "id": "0" 		
+	"adm": ""
+    "senha: ""
+}

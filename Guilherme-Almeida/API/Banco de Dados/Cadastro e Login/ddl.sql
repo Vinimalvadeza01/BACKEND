@@ -35,3 +35,9 @@ create table tb_endereco (
 select * from tb_cliente
 inner join tb_endereco
     on tb_endereco.id_cliente=tb_cliente.id_cliente;
+
+    create table tb_login_adm(
+	id_adm		int primary key auto_increment,
+	nm_adm		varchar(100),
+    ds_senha	varchar(11)
+);
