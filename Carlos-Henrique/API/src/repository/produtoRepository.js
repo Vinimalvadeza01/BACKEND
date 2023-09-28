@@ -1,6 +1,6 @@
 import connection from './connection.js';
 
-export default async function inserirProduto(produto){
+export async function inserirProduto(produto){
 
     let command=`
         insert into tb_produto(nm_produto,id_categoria,id_animal,ds_marca,ds_peso,vl_preco,nr_desconto,bt_disponivel,dt_lancamento,nr_qntdEstoque,nr_vendas,vl_avaliacao)
