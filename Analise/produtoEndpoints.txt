@@ -1,0 +1,29 @@
+(1) .POST /produto/cadastrar
+
+request body {
+
+    "nome":         "",
+    "categoria":    "",
+    "animal":       "",
+    "marca":        "",
+    "peso":         "",
+    "preco":        "",
+    "desconto":     "",
+    "disponivel":   "",
+    "lancamento":   "",
+    "estoque":      ""
+}
+
+response {
+
+    "nome":         "",
+    "categoria":    "",
+    "animal":       "",
+    "marca":        "",
+    "peso":         "",
+    "preco":        "",
+    "desconto":     "",
+    "disponivel":   "",
+    "lancamento":   "",
+    "esto
+}
