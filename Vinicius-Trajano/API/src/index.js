@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import {con} from './controller/controller.js';
 import express from 'express';
 import cors from 'cors';
 
