@@ -7,6 +7,6 @@ let con = await mysql2.createConnection({
   database: process.env.MYSQL_DB
 })
 
-console.log("BD conectado!");
+console.log('bd conectado')
 
 export {con} 

@@ -1,11 +1,15 @@
 import 'dotenv/config';
-import {con} from './controller/controller.js';
 import express from 'express';
 import cors from 'cors';
+
+import CadastroController from './controller/CadastroController.js';
 
 const server = express();
 server.use(cors());
 server.use(express.json());
+
+
+server.use(CadastroController);
 
 server.listen(
     process.env.PORT,
