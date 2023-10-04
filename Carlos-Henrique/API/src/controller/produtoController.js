@@ -1,5 +1,10 @@
 import express, { Router } from 'express';
-import {inserirProduto,verificarAdm,verificarAnimais,verificarCategorias, verificarProduto} from '../repository/produtoRepository.js';
+
+import {inserirProduto,verificarNomeProduto} from '../repository/produtoRepository.js';
+
+import {verificarCategorias} from '../repository/categoriaRepository.js';
+import {verificarAnimais} from '../repository/animaisRepository.js';
+import {verificarAdm} from '../repository/admRepository.js';
 
 const endpoints = Router();
 
@@ -85,7 +90,7 @@ endpoints.post('/produto/inserir', async (req,resp) => {
 
         // Verifica se existe um produto com mesmo nome
         
-        const verifNome=await verificarProduto(produto.nome);
+        const verifNome=await verificarNomeProduto(produto.nome);
 
         if(verifNome.length>0){
 
