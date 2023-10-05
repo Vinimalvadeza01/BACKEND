@@ -50,9 +50,23 @@ endpoints.post('/produto/inserir', async (req,resp) => {
             throw new Error('O valor do desconto não pode ser nulo, digite algo entre 0 e 100');
         }
 
-        if(!produto.disponivel){
+        if(produto.disponivel===undefined){
 
             throw new Error('Defina se o produto estará disponível ou não!');
+        }
+
+        // Caso o produto esteja disponível ao ser adicionado, irá ser colocado data de hoje
+        if(produto.disponivel){
+
+            const hoje= new Date();
+
+            produto.lancamento=hoje;
+        }
+
+        // Se não estiver disponível, terá que ser definido a data
+        if(!produto.lancamento){
+
+            throw new Error('Se o produto não estiver disponível ao ser cadastrado, é necessário informar uma data de lançamento');
         }
 
         if(!produto.estoque){
@@ -95,14 +109,6 @@ endpoints.post('/produto/inserir', async (req,resp) => {
         if(verifNome.length>0){
 
             throw new Error('Já existe um produto com este nome, delete-o antes de adicionar este');
-        }
-
-        // Caso o produto esteja disponível ao ser adicionado, irá ser colocado data de hoje
-        if(produto.disponivel){
-
-            let hoje= new Date();
-
-            produto.lancamento=hoje;
         }
 
         const respostaRepository= await inserirProduto(produto);
