@@ -45,7 +45,12 @@ endpoints.post('/produto/inserir', async (req,resp) => {
             throw new Error('O preço do produto deve ser definido!');
         }
 
-        if(!produto.desconto){
+        if(produto.preco===0){
+
+            throw new Error('O produto não pode ter um preço de 0');
+        }
+
+        if(produto.desconto===undefined){
 
             throw new Error('O valor do desconto não pode ser nulo, digite algo entre 0 e 100');
         }
