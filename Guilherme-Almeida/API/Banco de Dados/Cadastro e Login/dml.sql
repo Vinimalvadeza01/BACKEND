@@ -12,6 +12,9 @@ Select        NM_ADM        as Administrador,
         Where NM_adm=?
         AND   DS_SENHA=?;
 
+    insert into tb_cliente(DS_EMAIL, DS_CPF, DS_SENHA)
+            VALUES (lhermesou33@gmail.com, 54151239898, 1234567890)
+
 #Comandos Cadastro
 Insert Into tb_cliente(nm_nome,ds_email,ds_cpf,dt_datanasc,ds_senha,id_endereco)
     values(?,?,?,?,?,null);
