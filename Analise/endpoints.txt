@@ -2,15 +2,15 @@
 
 request body
 {
-    "email": "",
+    "emailCPF": "",
     "senha": ""
 }
 
 response
 {
     "id": 0,
-    "email": "",
-    "nome": ""
+    "emailCPF": "",
+    "n": ""
 }
 
 
