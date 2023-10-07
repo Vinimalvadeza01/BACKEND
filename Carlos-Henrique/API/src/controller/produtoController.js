@@ -40,7 +40,7 @@ endpoints.post('/produto/inserir', async (req,resp) => {
             throw new Error('O peso do produto é obrigatório');
         }
 
-        if(!produto.preco){
+        if(!produto.preco||isNaN(produto.preco)){
 
             throw new Error('O preço do produto deve ser definido!');
         }

@@ -28,6 +28,11 @@ endpoints.post('/imagem/:id/:posicao/inserir', salvarImagem.single('imagemProdut
             throw new Error('Já existe uma imagem nesta posição para este produto, escolha outra')
         }
 
+        if(!req.file){
+
+            throw new Error('Não foi possível adicionar a imagem');
+        }
+
         const caminho=req.file.path;
 
         const respostaRepository=await inserirImagem(caminho,id,posicao);
