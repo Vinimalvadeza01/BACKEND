@@ -37,8 +37,6 @@ endpoints.post('/imagem/:id/:posicao/inserir', salvarImagem.single('imagemProdut
 
     catch(err){
 
-        fs.unlinkSync(req.file.path);
-        
         resp.status(404).send({
 
             erro:err.message
