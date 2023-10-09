@@ -14,3 +14,17 @@ export async function verificarCategorias(id){
 
     return resp;
 }
+
+export async function listarCategorias(){
+
+    let command=`
+    
+        Select  ID_CATEGORIA    as ID,
+                DS_CATEGORIA    as Categoria
+            from tb_categoria
+    `;
+
+    const [resp]=await connection.query(command,[]);
+
+    return resp;
+}

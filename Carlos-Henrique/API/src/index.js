@@ -4,6 +4,8 @@ import cors from 'cors';
 
 import produtoController from './controller/produtoController.js';
 import imagemController from './controller/imagemController.js';
+import categoriaController from './controller/categoriaController.js';
+import animalController from './controller/animalController.js';
 
 const server=express();
 server.use(cors());
@@ -13,5 +15,7 @@ server.listen(process.env.PORT, () => console.log(`API subiu na porta ${process.
 
 server.use(produtoController);
 server.use(imagemController);
+server.use(categoriaController);
+server.use(animalController);
 
 

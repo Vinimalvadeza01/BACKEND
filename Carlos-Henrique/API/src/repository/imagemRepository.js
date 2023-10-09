@@ -12,7 +12,6 @@ export async function inserirImagem(caminho,produto,posicao){
 }
 
 // Verificar se há uma imagem naquela posição
-
 export async function verificarPosicao(id,posicao){
 
     let command=`
