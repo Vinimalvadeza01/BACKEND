@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import {inserirProduto,verificarNomeProduto} from '../repository/produtoRepository.js';
+import {inserirProduto,verificarNomeProduto,consultarProdutos} from '../repository/produtoRepository.js';
 
 import {verificarCategorias} from '../repository/categoriaRepository.js';
 import {verificarAnimais} from '../repository/animaisRepository.js';
@@ -119,6 +119,28 @@ endpoints.post('/produto/inserir', async (req,resp) => {
         const respostaRepository= await inserirProduto(produto);
 
         resp.send(respostaRepository);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/consulta/adm', async (req,resp) => {
+
+    try{
+
+        const filtro=req.body;
+
+        const dataEspecifica=req.query;
+
+        const respostaAPI=await consultarProdutos(filtro,dataEspecifica);
+
+        resp.send(respostaAPI);
     }
 
     catch(err){
