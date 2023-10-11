@@ -47,7 +47,7 @@ endpoints.post('/produto/inserir', async (req,resp) => {
 
         if(produto.preco===0){
 
-            throw new Error('O produto não pode ter um preço de 0');
+            throw new Error('O produto não pode ter um preço de 0R$');
         }
 
         if(produto.desconto===undefined){
