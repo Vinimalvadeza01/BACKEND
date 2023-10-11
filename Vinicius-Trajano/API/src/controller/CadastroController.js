@@ -4,12 +4,16 @@ import express, {Router } from 'express';
 
 const server= Router();
 
+
 server.post ('/cliente', async (req, resp ) => {
 
     try {
         const resposta = req.body;
 
         // Verificação de campos nulos
+
+
+      
 
         if(!resposta.nome){
 
@@ -51,6 +55,7 @@ server.post ('/cliente', async (req, resp ) => {
          }
 
          
+
          const VerifcEmail =await VerificarEmail(resposta.email);
 
          
@@ -59,7 +64,9 @@ server.post ('/cliente', async (req, resp ) => {
             throw new Error('Esse E-mail já foi cadastrado!');
         }
         
+        //Confrima senha
 
+        
 
         const respsd = await Cadastro(resposta);
         resp.send(respsd)
