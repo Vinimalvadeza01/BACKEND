@@ -136,9 +136,24 @@ endpoints.get('/produto/consulta/adm', async (req,resp) => {
 
         const filtro=req.body;
 
-        const dataEspecifica=req.query;
+        if(filtro.lancamentoEspecifico && !filtro.dataEspecifica){
 
-        const respostaAPI=await consultarProdutos(filtro,dataEspecifica);
+            throw new Error('A data específicada é inválida');
+        }
+
+        // Verificação para filtros que não podem estar ativos juntos
+
+        if(filtro.qtdEstoque && filtro.semEstoque){
+
+            throw new Error('O filtro de "Quantidade em estoque" e o filtro "Sem estoque" não podem ser usados ao mesmo tempo');
+        }
+
+        if(filtro.semLancamento && filtro.naoLancados){
+
+            throw new Error('O filtro de "Produtos sem data de lançamento" e de "Produtos não lançados" não podem ser usados ao mesmo tempo');
+        }
+
+        const respostaAPI=await consultarProdutos(filtro);
 
         resp.send(respostaAPI);
     }
