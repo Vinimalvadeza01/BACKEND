@@ -148,11 +148,6 @@ endpoints.get('/produto/consulta/adm', async (req,resp) => {
             throw new Error('O filtro de "Quantidade em estoque" e o filtro "Sem estoque" não podem ser usados ao mesmo tempo');
         }
 
-        if(filtro.semLancamento && filtro.naoLancados){
-
-            throw new Error('O filtro de "Produtos sem data de lançamento" e de "Produtos não lançados" não podem ser usados ao mesmo tempo');
-        }
-
         const respostaAPI=await consultarProdutos(filtro);
 
         resp.send(respostaAPI);

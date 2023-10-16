@@ -81,6 +81,18 @@ export async function consultarProdutos(filtro){
 
                         Where NR_posicao=1 `;
 
+    // Filtros: 
+    // Mais Vendidos(Order BY desc), 
+    //Melhor Avaliados(Order BY desc), 
+    //Mais Favoritados(ORDER BY desc), 
+    //Fora de estoque (Where estoque=0), 
+    //Menor em estoque (Order BY asc), 
+    //Mais recentes (Order BY  dt_lancamento asc), 
+    //Não Lançados (Where bt_disponivel=false),
+    //Sem lançamento (Where dt_lancamento=2099-01-01),
+    //Data específica (Where dt_lancamento=?)
+
+
     let comandoCondicao=``;
     if(filtro.semEstoque){
 
@@ -106,7 +118,7 @@ export async function consultarProdutos(filtro){
     let contarPosicoes=0;
     let colunas=[];
 
-    if(filtro.vendas){
+    if(filtro.maisVendidos){
 
         colunas[contarPosicoes]=`NR_vendas desc`;
 
@@ -129,12 +141,12 @@ export async function consultarProdutos(filtro){
 
     if(filtro.qtdEstoque){
 
-        colunas[contarPosicoes]=`NR_qntdEstoque desc`;
+        colunas[contarPosicoes]=`NR_qntdEstoque asc`;
 
         contarPosicoes=contarPosicoes+1;
     }
 
-    if(filtro.naoLancados){
+    if(filtro.lancamento){
 
         colunas[contarPosicoes]=`dt_lancamento asc`;
 
@@ -164,7 +176,7 @@ export async function consultarProdutos(filtro){
 
     let command=comandoBase+comandoCondicao+comandoOrder;
 
-    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoDisponivel,filtro.semLancamento,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.vendas,filtro.qtdFavoritos,filtro.qtdEstoque,filtro.naoLancados]);
+    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoDisponivel,filtro.semLancamento,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.vendas,filtro.qtdFavoritos,filtro.qtdEstoque,filtro.lancamento]);
 
     return resp;
 }
