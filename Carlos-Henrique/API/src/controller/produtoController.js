@@ -130,7 +130,7 @@ endpoints.post('/produto/inserir', async (req,resp) => {
     }
 });
 
-endpoints.get('/produto/consulta/adm', async (req,resp) => {
+endpoints.post('/produto/consulta/adm', async (req,resp) => {
 
     try{
 
@@ -143,9 +143,44 @@ endpoints.get('/produto/consulta/adm', async (req,resp) => {
 
         // Verificação para filtros que não podem estar ativos juntos
 
-        if(filtro.qtdEstoque && filtro.semEstoque){
+        if(filtro.menorEstoque && filtro.semEstoque){
 
             throw new Error('O filtro de "Quantidade em estoque" e o filtro "Sem estoque" não podem ser usados ao mesmo tempo');
+        }
+
+        // Para os filtros de data
+        const erroData1='O filtro que lista os produtos mais recentes não pode ser usado junto de qualquer outro filtro de data!';
+
+        if(filtro.maisRecentes && filtro.naoLancados){
+
+            throw new Error(erroData1);
+        }
+
+        else if(filtro.maisRecentes && filtro.semLancamento){
+
+            throw new Error(erroData1);
+        }
+
+        else if(filtro.maisRecentes && filtro.lancamentoEspecifico){
+
+            throw new Error(erroData1);
+
+        }
+
+        const erroData2='O filtro de lançamento específico não pode ser usado junto de qualquer outro filtro de data!';
+        if(filtro.lancamentoEspecifico && filtro.naoLancados){
+
+            throw new Error(erroData2);
+        }
+
+        else if(filtro.lancamentoEspecifico && filtro.semLancamento){
+
+            throw new Error(erroData2);
+        }
+
+        else if(filtro.lancamentoEspecifico && filtro.maisRecentes){
+
+            throw new Error(erroData2);
         }
 
         const respostaAPI=await consultarProdutos(filtro);

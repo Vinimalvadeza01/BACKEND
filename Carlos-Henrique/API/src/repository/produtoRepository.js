@@ -83,15 +83,14 @@ export async function consultarProdutos(filtro){
 
     // Filtros: 
     // Mais Vendidos(Order BY desc), 
-    //Melhor Avaliados(Order BY desc), 
-    //Mais Favoritados(ORDER BY desc), 
-    //Fora de estoque (Where estoque=0), 
-    //Menor em estoque (Order BY asc), 
-    //Mais recentes (Order BY  dt_lancamento asc), 
-    //Não Lançados (Where bt_disponivel=false),
-    //Sem lançamento (Where dt_lancamento=2099-01-01),
-    //Data específica (Where dt_lancamento=?)
-
+    // Melhor Avaliados(Order BY desc), 
+    // Mais Favoritados(ORDER BY desc), 
+    // Fora de estoque (Where estoque=0), 
+    // Menor em estoque (Order BY asc), 
+    // Mais recentes (Order BY  dt_lancamento asc), 
+    // Não Lançados (Where bt_disponivel=false),
+    // Sem lançamento (Where dt_lancamento=2099-01-01),
+    // Data específica (Where dt_lancamento=?)
 
     let comandoCondicao=``;
     if(filtro.semEstoque){
@@ -99,14 +98,14 @@ export async function consultarProdutos(filtro){
         comandoCondicao=comandoCondicao+` and nr_qntdEstoque=0 `
     }                        
     
-    if(filtro.naoDisponivel){
+    if(filtro.naoLancados){
 
         comandoCondicao=comandoCondicao+` and bt_disponivel=false `;
     }
 
     if(filtro.semLancamento){
 
-        comandoCondicao=comandoCondicao+` and dt_lancamento='2099-01-01 00:00:00' `
+        comandoCondicao=comandoCondicao+` and dt_lancamento='2099-01-01' `
     }
     
     if(filtro.lancamentoEspecifico){
@@ -125,28 +124,29 @@ export async function consultarProdutos(filtro){
         contarPosicoes=contarPosicoes+1;
     }
 
-    if(filtro.avaliacao){
+    if(filtro.melhorAvaliados){
 
         colunas[contarPosicoes]=`VL_avaliacao desc`;
 
         contarPosicoes=contarPosicoes+1;
     }
 
-    if(filtro.qtdFavoritos){
+    if(filtro.maisFavoritados){
 
         colunas[contarPosicoes]=`QTD_favoritos desc`;
 
         contarPosicoes=contarPosicoes+1;
     }
 
-    if(filtro.qtdEstoque){
+    if(filtro.menorEstoque){
 
         colunas[contarPosicoes]=`NR_qntdEstoque asc`;
+        comandoCondicao=comandoCondicao+` and NR_qntdEstoque!=0 `;
 
         contarPosicoes=contarPosicoes+1;
     }
 
-    if(filtro.lancamento){
+    if(filtro.maisRecentes){
 
         colunas[contarPosicoes]=`dt_lancamento asc`;
 
@@ -176,7 +176,7 @@ export async function consultarProdutos(filtro){
 
     let command=comandoBase+comandoCondicao+comandoOrder;
 
-    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoDisponivel,filtro.semLancamento,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.vendas,filtro.qtdFavoritos,filtro.qtdEstoque,filtro.lancamento]);
+    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
 
     return resp;
 }
