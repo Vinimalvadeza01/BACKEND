@@ -11,10 +11,6 @@ server.post ('/cliente', async (req, resp ) => {
         const resposta = req.body;
 
         // Verificação de campos nulos
-
-
-      
-
         if(!resposta.nome){
 
             throw new Error('O nome é obrigatório!');
@@ -33,17 +29,18 @@ server.post ('/cliente', async (req, resp ) => {
         
         }
         
-        if(!resposta.datanasc){
-
-            throw new Error('A data de nascimento é obrigatório!');
-        
-        }
-        
         if(!resposta.senha){
 
             throw new Error('A senha é obrigatório!');
         
         }
+
+        if(!resposta.nasc){
+
+            throw new Error('A data de nascimento é obrigatório!');
+        
+        }
+        
 
          // Verifica se o cliente nao esta repetindo dados de outro cliente
         
@@ -74,7 +71,7 @@ server.post ('/cliente', async (req, resp ) => {
     
     catch (err) 
     {
-        resp.status(400).send({
+        resp.status(404).send({
             erro:err.message
         });
     }

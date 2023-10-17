@@ -1,20 +1,19 @@
-import {con} from './controller.js';
+import {con} from './connection.js';
 
 
 export async function Cadastro(resposta){
-    console.log(resposta)
-        const comando = 
+
+        let comando = 
         `
-        INSERT INTO tb_cliente (nm_nome, ds_email, ds_cpf, dt_datanasc, ds_senha)
-		VALUES (?,?,?,?,?)
+        INSERT INTO tb_cliente (nm_nome, ds_email, ds_cpf, dt_nasc, ds_senha,qtd_pedidos)
+		VALUES (?,?,?,?,?,0)
         `
         const [resp] = await con.query(comando, [
             resposta.nome,
             resposta.email,
             resposta.cpf,
-            resposta.datanasc,
+            resposta.nasc,
             resposta.senha
-            
         ])
         return resp;
 }
