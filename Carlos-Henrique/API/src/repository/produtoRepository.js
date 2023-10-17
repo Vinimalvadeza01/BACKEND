@@ -105,12 +105,12 @@ export async function consultarProdutos(filtro){
 
     if(filtro.semLancamento){
 
-        comandoCondicao=comandoCondicao+` and dt_lancamento='2099-01-01' `
+        comandoCondicao=comandoCondicao+` and DATE(dt_lancamento)='2099-01-01' `
     }
     
     if(filtro.lancamentoEspecifico){
 
-        comandoCondicao=comandoCondicao+` and dt_lancamento=? `;
+        comandoCondicao=comandoCondicao+` and DATE(dt_lancamento)=? `;
     }
 
     let comandoOrder=`ORDER BY `;
