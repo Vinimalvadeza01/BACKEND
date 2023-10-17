@@ -136,6 +136,8 @@ endpoints.post('/produto/consulta/adm', async (req,resp) => {
 
         const filtro=req.body;
 
+        filtro.dataEspecifica=new Date(filtro.dataEspecifica);
+
         if(filtro.lancamentoEspecifico && !filtro.dataEspecifica){
 
             throw new Error('A data específicada é inválida');
