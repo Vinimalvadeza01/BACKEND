@@ -13,6 +13,8 @@ server.use(express.json());
 
 server.listen(process.env.PORT, () => console.log(`API subiu na porta ${process.env.PORT}`));
 
+server.use('/storage/images/imagensProdutos', express.static('storage/images/imagensProdutos'))
+
 server.use(produtoController);
 server.use(imagemController);
 server.use(categoriaController);
