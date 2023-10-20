@@ -39,17 +39,18 @@ response (200)
     "endereco": "0" 
 }
 
-(3) /POST /loginAdm
+(3) /POST /adm/login
 
 request body
 
 {
-    
+    "adm": ""
+    "senha" ""
 }
 response (200)
 {
     "id": "0" 		
-	"adm": ""
+	"usuario": ""
     "senha: ""
 }
 
