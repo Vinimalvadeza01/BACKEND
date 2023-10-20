@@ -53,7 +53,7 @@ export async function consultarProdutos(filtro){
 
     let comandoBase=`    
             Select 
-                TB_produto.ID_produto       as Id,
+                TB_produto.ID_produto       as ID,
                 DS_imagem                   as Capa,
                 DS_categoria                as Categoria,
                 NM_produto                  as Nome,
