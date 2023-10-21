@@ -7,6 +7,9 @@ import imagemController from './controller/imagemController.js';
 import categoriaController from './controller/categoriaController.js';
 import animalController from './controller/animalController.js';
 
+
+import CadastroController from './controller/CadastroController.js';
+
 const server=express();
 server.use(cors());
 server.use(express.json());
@@ -19,5 +22,8 @@ server.use(produtoController);
 server.use(imagemController);
 server.use(categoriaController);
 server.use(animalController);
+
+
+server.use(CadastroController);
 
 
