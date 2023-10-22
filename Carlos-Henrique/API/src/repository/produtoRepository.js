@@ -1,4 +1,4 @@
-import connection from './connection.js';
+import connection from './connection.js'; 
 
 export async function inserirProduto(produto){
 
@@ -179,27 +179,4 @@ export async function consultarProdutos(filtro){
     const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
 
     return resp;
-}
-
-export async function consultarClientes(filtro){
-
-    let comandoBase=`Select 	TB_Cliente.ID_cliente 	as ID, 
-    NM_nome 				as Nome, 
-    DS_email 				as Email,
-    DS_cpf 					as CPF, 
-    DT_nasc					as Nascimento, 
-    DS_senha				as Senha, 
-    QTD_pedidos				as Pedidos, 
-    TB_cliente.ID_endereco	as ID_Endereço,	 
-    NR_cep					as CEP,	
-    NM_rua					as Rua, 
-    NM_bairro				as Bairro, 
-    DS_numero				as Número, 
-    DS_complemento			as Complemento, 
-    NM_estado				as Estado, 
-    NM_cidade				as Cidade
-    
-    from TB_cliente
-        Inner Join TB_endereco
-            on TB_cliente.ID_cliente=TB_endereco.ID_cliente`;
 }

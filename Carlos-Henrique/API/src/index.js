@@ -6,7 +6,7 @@ import produtoController from './controller/produtoController.js';
 import imagemController from './controller/imagemController.js';
 import categoriaController from './controller/categoriaController.js';
 import animalController from './controller/animalController.js';
-
+import clienteController from './controller/clienteController.js';
 
 import CadastroController from './controller/CadastroController.js';
 
@@ -22,6 +22,7 @@ server.use(produtoController);
 server.use(imagemController);
 server.use(categoriaController);
 server.use(animalController);
+server.use(clienteController);
 
 
 server.use(CadastroController);
