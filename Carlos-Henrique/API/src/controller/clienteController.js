@@ -10,6 +10,11 @@ endpoints.post('/cliente/adm/consulta', async (req,resp) => {
 
         const filtro=req.body;
 
+        if(filtro.umPedido && filtro.semPedidos){
+
+            throw new Error('O filtro de "clientes que já fizeram um pedido" e o filtro de "clientes que nunca pediram" não podem ser usados ao mesmo tempo');
+        }
+
         if(filtro.anoNascimento && !filtro.dataInicio || filtro.anoNascimento && !filtro.dataFinal){
 
             throw new Error('Ano inválido');

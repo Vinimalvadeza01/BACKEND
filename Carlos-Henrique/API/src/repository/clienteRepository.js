@@ -34,6 +34,12 @@ export async function consultarClientes(filtro){
     let contOrder=0;
 
     // Filtros para o Where
+
+    if(filtro.umPedido){
+
+        colunasWhere[contWhere]=` QTD_pedidos>0`;
+    }
+
     if(filtro.semPedidos){
 
         colunasWhere[contWhere]=` QTD_pedidos=0`;
