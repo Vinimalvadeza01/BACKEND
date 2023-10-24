@@ -34,6 +34,12 @@ export async function consultarClientes(filtro){
     let contOrder=0;
 
     // Filtros para o Where
+    if(filtro.semPedidos){
+
+        colunasWhere[contWhere]=` QTD_pedidos=0`;
+        contWhere=contWhere+1;
+    }
+
     if(filtro.semEndereco){
 
         colunasWhere[contWhere]=` TB_cliente.ID_Endereco IS NULL`;
@@ -59,6 +65,12 @@ export async function consultarClientes(filtro){
     }
 
     // Filtros para o order BY
+    if(filtro.maisPedidos){
+
+        colunasOrder[contOrder]=` QTD_pedidos desc`;
+        contOrder=contOrder+1;
+    }
+
     if(filtro.ordemAlfabetica){
 
         colunasOrder[contOrder]=` NM_nome asc`;
@@ -119,7 +131,7 @@ export async function consultarClientes(filtro){
 
     let comandoFinal=comandoBase+comandosWhere+comandosOrder;
 
-    const [resp]= await connection.query(comandoFinal,[filtro.semEndereco,filtro.anoNascimento,filtro.dataInicio,filtro.dataFinal,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
+    const [resp]= await connection.query(comandoFinal,[filtro.semPedidos,filtro.semEndereco,filtro.anoNascimento,filtro.dataInicio,filtro.dataFinal,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
 
     return resp;
 }
