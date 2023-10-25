@@ -1,4 +1,4 @@
-import { LoginAdm } from "../repository/admRepository.js";
+import { LoginAdm  } from "../repository/admRepository.js";
 
 import { Router } from "express";
 const server = Router();
@@ -8,7 +8,7 @@ server.post('/adm/login', async (req, resp) =>{
     try{
         const usuario = req.body;
 
-        const resposta = await loginAdm(usuario);
+        const resposta = await LoginAdm (usuario);
 
         if(!usuario.adm){
 
