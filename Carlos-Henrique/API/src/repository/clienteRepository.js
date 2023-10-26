@@ -11,7 +11,8 @@ export async function consultarClientes(filtro){
         DT_nasc					as Nascimento,
         DS_senha				as Senha,
         QTD_pedidos				as Pedidos,
-        TB_cliente.ID_endereco	as ID_Endereco,
+        TB_cliente.ID_endereco	as Endereco,
+        TB_endereco.ID_endereco as ID_Endereco,
         NR_cep					as CEP,
         NM_rua					as Rua,
         NM_bairro				as Bairro,
@@ -54,19 +55,30 @@ export async function consultarClientes(filtro){
 
     if(filtro.anoNascimento){
 
-        colunasWhere[contWhere]=` DT_nasc between ? and ?`;
+        let puxarAno=[];
+        puxarAno.push(filtro.ano);
+
+        colunasWhere[contWhere]=` YEAR(DT_nasc)=`+puxarAno[0];
         contWhere=contWhere+1;
     }
 
     if(filtro.estadoEspecifico){
 
-        colunasWhere[contWhere]=` NM_estado=?`;
+        let puxarEstado=[];
+
+        puxarEstado.push(filtro.estado);
+
+        colunasWhere[contWhere]=` NM_estado="`+puxarEstado[0]+'"';
         contWhere=contWhere+1;
     }
 
     if(filtro.cidadeEspecifica){
 
-        colunasWhere[contWhere]=` NM_cidade=?`;
+        let puxarCidade=[];
+
+        puxarCidade.push(filtro.cidade);
+
+        colunasWhere[contWhere]=` NM_cidade="`+puxarCidade[0]+'"';
         contWhere=contWhere+1;
     }
 
@@ -85,13 +97,13 @@ export async function consultarClientes(filtro){
 
     if(filtro.nascimentoMaisNovos){
 
-        colunasOrder[contOrder]=` DT_nasc desc`;
+        colunasOrder[contOrder]=` DT_nasc asc`;
         contOrder=contOrder+1;
     }
 
     if(filtro.nascimentoMaisVelhos){
 
-        colunasOrder[contOrder]=` DT_nasc asc`;
+        colunasOrder[contOrder]=` DT_nasc desc`;
         contOrder=contOrder+1;
     }
 
@@ -136,8 +148,8 @@ export async function consultarClientes(filtro){
     }
 
     let comandoFinal=comandoBase+comandosWhere+comandosOrder;
-
-    const [resp]= await connection.query(comandoFinal,[filtro.semPedidos,filtro.semEndereco,filtro.anoNascimento,filtro.dataInicio,filtro.dataFinal,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
+    
+    const [resp]= await connection.query(comandoFinal,[filtro.semPedidos,filtro.semEndereco,filtro.anoNascimento,filtro.ano,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
 
     return resp;
 }

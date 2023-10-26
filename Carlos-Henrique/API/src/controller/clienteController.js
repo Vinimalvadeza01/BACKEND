@@ -15,7 +15,7 @@ endpoints.post('/cliente/adm/consulta', async (req,resp) => {
             throw new Error('O filtro de "clientes que já fizeram um pedido" e o filtro de "clientes que nunca pediram" não podem ser usados ao mesmo tempo');
         }
 
-        if(filtro.anoNascimento && !filtro.dataInicio || filtro.anoNascimento && !filtro.dataFinal){
+        if(filtro.anoNascimento && !filtro.ano){
 
             throw new Error('Ano inválido');
         }
@@ -25,7 +25,7 @@ endpoints.post('/cliente/adm/consulta', async (req,resp) => {
             throw new Error('Se o filtro de estado específico está ativo, você deve definiir o estado!');
         }
 
-        if(filtro.cidadeEspecifica && !cidade){
+        if(filtro.cidadeEspecifica && !filtro.cidade){
 
             throw new Error('Se o filtro de cidade específica está ativo, você deve definiir a cidade!');
         }
