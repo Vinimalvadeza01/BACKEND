@@ -15,3 +15,17 @@ export async function verificarAdm(id){
     
     return resp;
 }
+
+export async function listarAdministradores(){
+
+    let command=`
+    
+        Select  id_adm as ID,
+                nm_adm as Adm
+        from TB_LOGIN_ADM 
+    `;
+
+    const [resp]= await connection.query(command,[]);
+
+    return resp;
+}

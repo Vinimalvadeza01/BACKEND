@@ -136,8 +136,6 @@ endpoints.post('/produto/consulta/adm', async (req,resp) => {
 
         const filtro=req.body;
 
-        filtro.dataEspecifica=new Date(filtro.dataEspecifica);
-
         if(filtro.lancamentoEspecifico && !filtro.dataEspecifica){
 
             throw new Error('A data específicada é inválida');
@@ -183,6 +181,21 @@ endpoints.post('/produto/consulta/adm', async (req,resp) => {
         else if(filtro.lancamentoEspecifico && filtro.maisRecentes){
 
             throw new Error(erroData2);
+        }
+
+        if(filtro.porCategoria && !filtro.categoria){
+
+            throw new Error('Se o filtro de categoria está ativo, o ID da categoria deve ser definido!');
+        }
+
+        if(filtro.porAnimal && !filtro.animal){
+
+            throw new Error('Se o filtro de animal está ativo, o ID do animal deve ser definido!');
+        }
+
+        if(filtro.porAdministrador && !filtro.adm){
+
+            throw new Error('Se o filtro de administrador está ativo, o ID do administrador deve ser definido!');
         }
 
         const respostaAPI=await consultarProdutos(filtro);

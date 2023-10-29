@@ -82,6 +82,15 @@ export async function consultarClientes(filtro){
         contWhere=contWhere+1;
     }
 
+    if(filtro.clienteEspecifico){
+
+        let puxarCliente=[];
+
+        puxarCliente.push(filtro.cliente);
+
+        colunasWhere[contWhere]=` NM_nome like('%${puxarCliente[0]}%') OR DS_email like('%${puxarCliente[0]}%') OR DS_cpf like('%${puxarCliente[0]}%');`;
+    }
+
     // Filtros para o order BY
     if(filtro.maisPedidos){
 
@@ -149,7 +158,7 @@ export async function consultarClientes(filtro){
 
     let comandoFinal=comandoBase+comandosWhere+comandosOrder;
     
-    const [resp]= await connection.query(comandoFinal,[filtro.semPedidos,filtro.semEndereco,filtro.anoNascimento,filtro.ano,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
+    const [resp]= await connection.query(comandoFinal,[filtro.semPedidos,filtro.semEndereco,filtro.anoNascimento,filtro.ano,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.cliente,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
 
     return resp;
 }

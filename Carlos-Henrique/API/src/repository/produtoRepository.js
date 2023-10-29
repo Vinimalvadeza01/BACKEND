@@ -55,8 +55,10 @@ export async function consultarProdutos(filtro){
             Select 
                 TB_produto.ID_produto       as ID,
                 DS_imagem                   as Capa,
+                TB_produto.id_categoria     as Categoria_ID,
                 DS_categoria                as Categoria,
                 NM_produto                  as Nome,
+                TB_PRODUTO.id_animal        as Animal_ID,
                 NM_animal                   as Animal,
                 NR_vendas                   as Vendas,
                 NR_qntdEstoque              as Estoque,
@@ -66,7 +68,8 @@ export async function consultarProdutos(filtro){
                 DT_lancamento               as Lançamento,
                 VL_avaliacao                as Avaliação,
                 QTD_favoritos               as Favoritos,
-                NM_adm                      as Adm
+                NM_adm                      as Adm,
+                TB_PRODUTO.id_adm           as Adm_ID
 
                 from TB_produto
 
@@ -108,9 +111,40 @@ export async function consultarProdutos(filtro){
         comandoCondicao=comandoCondicao+` and DATE(dt_lancamento)='2099-01-01' `
     }
     
+    if(filtro.porCategoria){
+
+        let puxarIDCategoria=[];
+
+        puxarIDCategoria.push(filtro.categoria);
+
+        comandoCondicao=comandoCondicao+` and tb_produto.id_categoria=${filtro.categoria}`;
+    }
+
+    if(filtro.porAnimal){
+
+        let puxarIDAnimal=[];
+
+        puxarIDAnimal.push(filtro.animal);
+
+        comandoCondicao=comandoCondicao+` and TB_PRODUTO.id_animal=${filtro.animal}`;
+    }
+
+    if(filtro.porAdministrador){
+
+        let puxarIDAdm=[];
+
+        puxarIDAdm.push(filtro.adm);
+
+        comandoCondicao=comandoCondicao+` and TB_LOGIN_ADM.id_adm=${filtro.adm}`;
+    }
+
     if(filtro.lancamentoEspecifico){
 
-        comandoCondicao=comandoCondicao+` and DATE(dt_lancamento)=? `;
+        const dataEspecificada = new Date(filtro.dataEspecifica); 
+
+        const dataFormatada = dataEspecificada.toISOString().split('T')[0];
+
+        comandoCondicao=comandoCondicao+` and dt_lancamento='${dataFormatada}'`;
     }
 
     let comandoOrder=`ORDER BY `;
@@ -175,7 +209,7 @@ export async function consultarProdutos(filtro){
     // #Filtro de quantidade em estoque não pode estar ativo junto do filtro de estoque=0`;
     let command=comandoBase+comandoCondicao+comandoOrder;
 
-    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
+    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.porCategoria, filtro.categoria,filtro.porAnimal,filtro.animal,filtro.porAdministrador,filtro.adm,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
 
     return resp;
 }
