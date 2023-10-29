@@ -147,6 +147,15 @@ export async function consultarProdutos(filtro){
         comandoCondicao=comandoCondicao+` and dt_lancamento='${dataFormatada}'`;
     }
 
+    if(filtro.produtoEspecifico){
+
+        const puxarProduto=[];
+
+        puxarProduto.push(filtro.produto);
+
+        comandoCondicao=comandoCondicao+` and nm_produto like('%${puxarProduto[0]}%') OR TB_produto.id_produto like('%${puxarProduto[0]}%')`;
+    }
+
     let comandoOrder=`ORDER BY `;
     let contarPosicoes=0;
     let colunas=[];
@@ -209,7 +218,7 @@ export async function consultarProdutos(filtro){
     // #Filtro de quantidade em estoque não pode estar ativo junto do filtro de estoque=0`;
     let command=comandoBase+comandoCondicao+comandoOrder;
 
-    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.porCategoria, filtro.categoria,filtro.porAnimal,filtro.animal,filtro.porAdministrador,filtro.adm,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
+    const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.porCategoria, filtro.categoria,filtro.porAnimal,filtro.animal,filtro.porAdministrador,filtro.adm,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.produtoEspecifico,filtro.produto,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
 
     return resp;
 }
