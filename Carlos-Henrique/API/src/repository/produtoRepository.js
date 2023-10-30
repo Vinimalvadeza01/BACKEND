@@ -217,7 +217,7 @@ export async function consultarProdutos(filtro){
 
     // #Filtro de quantidade em estoque não pode estar ativo junto do filtro de estoque=0`;
     let command=comandoBase+comandoCondicao+comandoOrder;
-
+console.log(command);
     const [resp]=await connection.query(command,[filtro.semEstoque,filtro.naoLancados,filtro.semLancamento,filtro.porCategoria, filtro.categoria,filtro.porAnimal,filtro.animal,filtro.porAdministrador,filtro.adm,filtro.lancamentoEspecifico,filtro.dataEspecifica,filtro.produtoEspecifico,filtro.produto,filtro.maisVendidos,filtro.maisFavoritados,filtro.menorEstoque,filtro.maisRecentes]);
 
     return resp;
