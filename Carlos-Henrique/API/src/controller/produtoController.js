@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import {inserirProduto,verificarNomeProduto,consultarProdutos} from '../repository/produtoRepository.js';
+import {inserirProduto,verificarNomeProduto,consultarProdutos,consultaMaisVendidos,consultaMelhorAval,consultaMVCachorro,consultaMVGato} from '../repository/produtoRepository.js';
 
 import {verificarCategorias} from '../repository/categoriaRepository.js';
 import {verificarAnimais} from '../repository/animaisRepository.js';
@@ -209,6 +209,51 @@ endpoints.post('/produto/consulta/adm', async (req,resp) => {
 
             erro:err.message
         });
+    }
+});
+
+endpoints.get('/produto/consulta/maisVendidos', async (req, resp) => {
+    try {
+       
+        const resposta = await consultaMaisVendidos();
+        resp.send(resposta)
+    }   catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+endpoints.get('/produto/consulta/melhorAval', async (req, resp) => {
+    try {
+        const resposta = await consultaMelhorAval();
+        resp.send(resposta)
+    }   catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+endpoints.get('/produto/consulta/MVCachorro', async (req, resp) =>{
+    try {
+        const resposta = await consultaMVCachorro();
+        resp.send(resposta)
+    }   catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+endpoints.get('/produto/consulta/MVGato', async (req, resp) =>{
+    try {
+        const resposta = await consultaMVGato();
+        resp.send(resposta)
+    }   catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
     }
 });
 
