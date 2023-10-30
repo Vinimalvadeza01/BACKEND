@@ -6,10 +6,12 @@ import express from 'express';
 
 const server = express();
 
+server.use('/storage/images/imagensProdutos', express.static('storage/images/imagensProdutos'));
+
 server.use(cors());
 server.use(express.json());
 
-server.use(produtoController)
+server.use(produtoController);
 
 server.listen(process.env.PORT,
     () => console.log(`API na porra da PORT ${process.env.PORT}`))
