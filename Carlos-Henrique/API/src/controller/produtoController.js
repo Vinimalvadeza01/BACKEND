@@ -35,6 +35,11 @@ endpoints.post('/produto/inserir', async (req,resp) => {
             throw new Error('A marca do produto é obrigatória!');
         }
 
+        if(!produto.descricao){
+
+            throw new Error('Escreva uma descrição do produto!');
+        }
+
         if(!produto.peso){
 
             throw new Error('O peso do produto é obrigatório');
@@ -130,7 +135,7 @@ endpoints.post('/produto/inserir', async (req,resp) => {
     }
 });
 
-endpoints.post('/produto/consulta/adm', async (req,resp) => {
+endpoints.post('/produto/adm/consulta', async (req,resp) => {
 
     try{
 

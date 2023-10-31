@@ -3,10 +3,10 @@ import connection from './connection.js';
 export async function inserirProduto(produto){
 
     let command=`
-        insert into tb_produto(nm_produto,id_categoria,id_animal,ds_marca,ds_peso,vl_preco,nr_desconto,bt_disponivel,dt_lancamento,nr_qntdEstoque,nr_vendas,vl_avaliacao,qtd_favoritos,id_adm)
-	    values(?,?,?,?,?,?,?,?,?,?,0,0.0,0,?)`;
+        insert into tb_produto(nm_produto,id_categoria,id_animal,ds_marca,ds_produto,ds_peso,vl_preco,nr_desconto,bt_disponivel,dt_lancamento,nr_qntdEstoque,nr_vendas,vl_avaliacao,qtd_avaliacoes,qtd_favoritos,id_adm)
+	    values(?,?,?,?,?,?,?,?,?,?,?,0,0.0,0,0,?)`;
     
-    const [resp]=await connection.query(command,[produto.nome,produto.categoria,produto.animal,produto.marca,produto.peso,produto.preco,produto.desconto,produto.disponivel,produto.lancamento,produto.estoque,produto.adm]);
+    const [resp]=await connection.query(command,[produto.nome,produto.categoria,produto.animal,produto.marca,produto.descricao,produto.peso,produto.preco,produto.desconto,produto.disponivel,produto.lancamento,produto.estoque,produto.adm]);
 
     produto.id=resp.insertId;
 
@@ -60,6 +60,7 @@ export async function consultarProdutos(filtro){
                 NM_produto                  as Nome,
                 TB_PRODUTO.id_animal        as Animal_ID,
                 NM_animal                   as Animal,
+                ds_produto                  as Descrição,
                 NR_vendas                   as Vendas,
                 NR_qntdEstoque              as Estoque,
                 VL_preco                    as Preço,
@@ -240,6 +241,8 @@ export async function consultaMaisVendidos(){
 
                 WHERE           NR_posicao=1
                 ORDER BY        NR_VENDAS 	desc
+
+                LIMIT 0,12
     `
     const [resp] = await connection.query(comando, [])
     return resp;
@@ -261,7 +264,8 @@ export async function consultaMelhorAval(){
                 ON TB_produto.ID_produto=TB_imagem.ID_produto
 
             WHERE           NR_posicao=1
-            ORDER BY        vl_avaliacao 	desc`;
+            ORDER BY        vl_avaliacao 	desc
+            LIMIT 0,12`;
     
     const [resp] = await connection.query(comando, []);
     return resp;
@@ -286,7 +290,7 @@ export async function consultaMVCachorro(){
         WHERE ID_ANIMAL=1
         
         ORDER BY NR_VENDAS desc, VL_AVALIACAO desc
-        LIMIT 1, 4
+        LIMIT 0, 12
     `
     const [resp] = await connection.query(comando, [])
     return resp;
@@ -308,7 +312,7 @@ export async function consultaMVGato(){
                 ON TB_produto.ID_produto=TB_imagem.ID_produto
     
         ORDER BY NR_VENDAS desc, VL_AVALIACAO desc
-        LIMIT 1, 4
+        LIMIT 0, 12
     `
     const [resp] = await connection.query(comando, [])
     return resp;

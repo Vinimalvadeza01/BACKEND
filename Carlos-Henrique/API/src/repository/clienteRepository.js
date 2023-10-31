@@ -13,7 +13,7 @@ export async function consultarClientes(filtro){
         QTD_pedidos				as Pedidos,
         TB_cliente.ID_endereco	as Endereco,
         TB_endereco.ID_endereco as ID_Endereco,
-        NR_cep					as CEP,
+        ds_cep					as CEP,
         NM_rua					as Rua,
         NM_bairro				as Bairro,
         DS_numero				as Número,
