@@ -1,6 +1,6 @@
 import express, { Router } from 'express';
 
-import {inserirProduto,verificarNomeProduto,consultarProdutos,consultaMaisVendidos,consultaMelhorAval,consultaMVCachorro,consultaMVGato} from '../repository/produtoRepository.js';
+import {inserirProduto,verificarNomeProduto,consultarProdutos,consultaMaisVendidos,consultaMelhorAval,consultaMVCachorro,consultaMVGato,consultaCaesHeader,consultaGatosHeader,consultaPassarosHeader,consultaPeixesHeader,consultaOutrosAnimaisHeader} from '../repository/produtoRepository.js';
 
 import {verificarCategorias} from '../repository/categoriaRepository.js';
 import {verificarAnimais} from '../repository/animaisRepository.js';
@@ -14,6 +14,11 @@ endpoints.post('/produto/inserir', async (req,resp) => {
 
         const produto=req.body;
         
+        const hoje=new Date();
+        let formatarData=hoje.toISOString().split('T');
+
+        produto.cadastro=formatarData[0];
+
         // Verificação de campos nulos
         if(!produto.nome){
 
@@ -58,6 +63,11 @@ endpoints.post('/produto/inserir', async (req,resp) => {
         if(produto.desconto===undefined){
 
             throw new Error('O valor do desconto não pode ser nulo, digite algo entre 0 e 100');
+        }
+
+        if(!produto.cadastro){
+
+            throw new Error('Não foi possível definir a data de cadastro do produto');
         }
 
         if(produto.disponivel===undefined){
@@ -259,6 +269,96 @@ endpoints.get('/produto/consulta/MVGato', async (req, resp) =>{
         resp.status(400).send({
             erro: err.message
         })
+    }
+});
+
+endpoints.get('/produto/consulta/header/caes', async (req,resp) => {
+
+    try{
+
+        const resposta=await consultaCaesHeader();
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/consulta/header/gatos', async (req,resp) => {
+
+    try{
+
+        const resposta=await consultaGatosHeader();
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/consulta/header/passaros', async (req,resp) => {
+
+    try{
+
+        const resposta=await consultaPassarosHeader();
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/consulta/header/peixes', async (req,resp) => {
+
+    try{
+
+        const resposta=await consultaPeixesHeader();
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/consulta/header/outros', async (req,resp) => {
+
+    try{
+
+        const resposta=await consultaOutrosAnimaisHeader();
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
     }
 });
 

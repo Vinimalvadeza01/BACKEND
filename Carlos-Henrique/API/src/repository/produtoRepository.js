@@ -3,10 +3,10 @@ import connection from './connection.js';
 export async function inserirProduto(produto){
 
     let command=`
-        insert into tb_produto(nm_produto,id_categoria,id_animal,ds_marca,ds_produto,ds_peso,vl_preco,nr_desconto,bt_disponivel,dt_lancamento,nr_qntdEstoque,nr_vendas,vl_avaliacao,qtd_avaliacoes,qtd_favoritos,id_adm)
-	    values(?,?,?,?,?,?,?,?,?,?,?,0,0.0,0,0,?)`;
+        insert into tb_produto(nm_produto,id_categoria,id_animal,ds_marca,ds_produto,ds_peso,vl_preco,nr_desconto,bt_disponivel,dt_cadastro,dt_lancamento,nr_qntdEstoque,nr_vendas,vl_avaliacao,qtd_avaliacoes,qtd_favoritos,id_adm)
+	    values(?,?,?,?,?,?,?,?,?,?,?,?,0,0.0,0,0,?)`;
     
-    const [resp]=await connection.query(command,[produto.nome,produto.categoria,produto.animal,produto.marca,produto.descricao,produto.peso,produto.preco,produto.desconto,produto.disponivel,produto.lancamento,produto.estoque,produto.adm]);
+    const [resp]=await connection.query(command,[produto.nome,produto.categoria,produto.animal,produto.marca,produto.descricao,produto.peso,produto.preco,produto.desconto,produto.disponivel,produto.cadastro,produto.lancamento,produto.estoque,produto.adm]);
 
     produto.id=resp.insertId;
 
@@ -66,6 +66,7 @@ export async function consultarProdutos(filtro){
                 VL_preco                    as Preço,
                 NR_desconto                 as Desconto,
                 BT_disponivel               as Disponível,
+                dt_cadastro                 as Cadastro,
                 DT_lancamento               as Lançamento,
                 VL_avaliacao                as Avaliação,
                 QTD_favoritos               as Favoritos,
@@ -192,7 +193,7 @@ export async function consultarProdutos(filtro){
 
     if(filtro.maisRecentes){
 
-        colunas[contarPosicoes]=`dt_lancamento asc`;
+        colunas[contarPosicoes]=`dt_cadastro asc`;
 
         contarPosicoes=contarPosicoes+1;
     }
@@ -240,9 +241,10 @@ export async function consultaMaisVendidos(){
 					ON TB_produto.ID_produto=TB_imagem.ID_produto
 
                 WHERE           NR_posicao=1
+                AND             nr_vendas>0
                 ORDER BY        NR_VENDAS 	desc
 
-                LIMIT 0,12
+                LIMIT 0,20
     `
     const [resp] = await connection.query(comando, [])
     return resp;
@@ -264,8 +266,9 @@ export async function consultaMelhorAval(){
                 ON TB_produto.ID_produto=TB_imagem.ID_produto
 
             WHERE           NR_posicao=1
+            AND             qtd_avaliacoes>0
             ORDER BY        vl_avaliacao 	desc
-            LIMIT 0,12`;
+            LIMIT 0,20`;
     
     const [resp] = await connection.query(comando, []);
     return resp;
@@ -287,10 +290,13 @@ export async function consultaMVCachorro(){
             Inner Join TB_imagem
                 ON TB_produto.ID_produto=TB_imagem.ID_produto
         
-        WHERE ID_ANIMAL=1
+            WHERE ID_ANIMAL=1
+            AND nr_vendas>0 OR 
+            qtd_avaliacoes>0
+            AND id_animal=1
         
-        ORDER BY NR_VENDAS desc, VL_AVALIACAO desc
-        LIMIT 0, 12
+            ORDER BY VL_AVALIACAO desc,NR_VENDAS desc
+            LIMIT 0, 20
     `
     const [resp] = await connection.query(comando, [])
     return resp;
@@ -311,9 +317,154 @@ export async function consultaMVGato(){
             Inner Join TB_imagem
                 ON TB_produto.ID_produto=TB_imagem.ID_produto
     
-        ORDER BY NR_VENDAS desc, VL_AVALIACAO desc
-        LIMIT 0, 12
+            WHERE ID_ANIMAL=2
+            AND nr_vendas>0 OR 
+            qtd_avaliacoes>0
+            AND id_animal=2
+
+            ORDER BY VL_AVALIACAO desc,NR_VENDAS desc
+            LIMIT 0, 20
     `
     const [resp] = await connection.query(comando, [])
+    return resp;
+}
+
+export async function consultaCaesHeader(){
+
+    const command=`
+    Select  TB_PRODUTO.ID_PRODUTO AS ID,    
+            DS_imagem  as Capa,
+            NM_produto as Nome,
+            Vl_avaliacao as Avaliação,
+            QTD_avaliacoes as Avaliações,
+            VL_preco as Preço,
+            NR_VENDAS as Vendas
+
+            FROM            TB_PRODUTO
+
+            Inner Join TB_imagem
+                ON TB_produto.ID_produto=TB_imagem.ID_produto
+                
+			WHERE id_animal=1
+            AND nr_vendas>0
+            
+            ORDER BY RAND()
+            LIMIT 0,4
+    `;
+
+    const [resp]=await connection.query(command,[]);
+
+    return resp;
+}
+
+export async function consultaGatosHeader(){
+
+    const command=`
+    Select  TB_PRODUTO.ID_PRODUTO AS ID,    
+            DS_imagem  as Capa,
+            NM_produto as Nome,
+            Vl_avaliacao as Avaliação,
+            QTD_avaliacoes as Avaliações,
+            VL_preco as Preço,
+            NR_VENDAS as Vendas
+
+            FROM            TB_PRODUTO
+
+            Inner Join TB_imagem
+                ON TB_produto.ID_produto=TB_imagem.ID_produto
+                
+			WHERE id_animal=2
+            AND nr_vendas>0
+            
+            ORDER BY RAND()
+            LIMIT 0,4
+    `;
+
+    const [resp]=await connection.query(command,[]);
+
+    return resp;
+}
+
+export async function consultaPassarosHeader(){
+
+    const command=`
+    Select  TB_PRODUTO.ID_PRODUTO AS ID,    
+            DS_imagem  as Capa,
+            NM_produto as Nome,
+            Vl_avaliacao as Avaliação,
+            QTD_avaliacoes as Avaliações,
+            VL_preco as Preço,
+            NR_VENDAS as Vendas
+
+            FROM            TB_PRODUTO
+
+            Inner Join TB_imagem
+                ON TB_produto.ID_produto=TB_imagem.ID_produto
+                
+			WHERE id_animal=3
+            AND nr_vendas>0
+            
+            ORDER BY RAND()
+            LIMIT 0,4
+    `;
+
+    const [resp]=await connection.query(command,[]);
+
+    return resp;
+}
+
+export async function consultaPeixesHeader(){
+
+    const command=`
+    Select  TB_PRODUTO.ID_PRODUTO AS ID,    
+            DS_imagem  as Capa,
+            NM_produto as Nome,
+            Vl_avaliacao as Avaliação,
+            QTD_avaliacoes as Avaliações,
+            VL_preco as Preço,
+            NR_VENDAS as Vendas
+
+            FROM            TB_PRODUTO
+
+            Inner Join TB_imagem
+                ON TB_produto.ID_produto=TB_imagem.ID_produto
+                
+			WHERE id_animal=4
+            AND nr_vendas>0
+            
+            ORDER BY RAND()
+            LIMIT 0,4
+    `;
+
+    const [resp]=await connection.query(command,[]);
+
+    return resp;
+}
+
+export async function consultaOutrosAnimaisHeader(){
+
+    const command=`
+    Select  TB_PRODUTO.ID_PRODUTO AS ID,    
+            DS_imagem  as Capa,
+            NM_produto as Nome,
+            Vl_avaliacao as Avaliação,
+            QTD_avaliacoes as Avaliações,
+            VL_preco as Preço,
+            NR_VENDAS as Vendas
+
+            FROM            TB_PRODUTO
+
+            Inner Join TB_imagem
+                ON TB_produto.ID_produto=TB_imagem.ID_produto
+                
+			WHERE id_animal=5
+            AND nr_vendas>0
+            
+            ORDER BY RAND()
+            LIMIT 0,4
+    `;
+
+    const [resp]=await connection.query(command,[]);
+
     return resp;
 }
