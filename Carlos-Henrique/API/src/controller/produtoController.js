@@ -151,7 +151,7 @@ endpoints.post('/produto/adm/consulta', async (req,resp) => {
 
         const filtro=req.body;
 
-        if(filtro.lancamentoEspecifico && !filtro.dataEspecifica){
+        if(filtro.cadastroEspecifico && !filtro.dataEspecifica){
 
             throw new Error('A data específicada é inválida');
         }
@@ -166,34 +166,24 @@ endpoints.post('/produto/adm/consulta', async (req,resp) => {
         // Para os filtros de data
         const erroData1='O filtro que lista os produtos mais recentes não pode ser usado junto de qualquer outro filtro de data!';
 
-        if(filtro.maisRecentes && filtro.naoLancados){
-
-            throw new Error(erroData1);
-        }
-
-        else if(filtro.maisRecentes && filtro.semLancamento){
-
-            throw new Error(erroData1);
-        }
-
-        else if(filtro.maisRecentes && filtro.lancamentoEspecifico){
+        if(filtro.maisRecentes && filtro.cadastroEspecifico){
 
             throw new Error(erroData1);
 
         }
 
         const erroData2='O filtro de lançamento específico não pode ser usado junto de qualquer outro filtro de data!';
-        if(filtro.lancamentoEspecifico && filtro.naoLancados){
+        if(filtro.cadastroEspecifico && filtro.naoLancados){
 
             throw new Error(erroData2);
         }
 
-        else if(filtro.lancamentoEspecifico && filtro.semLancamento){
+        else if(filtro.cadastroEspecifico && filtro.semLancamento){
 
             throw new Error(erroData2);
         }
 
-        else if(filtro.lancamentoEspecifico && filtro.maisRecentes){
+        else if(filtro.cadastroEspecifico && filtro.maisRecentes){
 
             throw new Error(erroData2);
         }
