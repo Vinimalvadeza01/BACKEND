@@ -27,3 +27,23 @@ export async function verificarPosicao(id,posicao){
 
     return resp;
 }
+
+export async function consultarImagensProduto(id){
+
+    let command=`
+
+        Select 
+        id_imagem 	as ID, 
+        ds_imagem 	as Imagem, 
+        id_produto 	as Produto, 
+        nr_posicao 	as Posição
+        
+        from tb_imagem
+        
+        Where id_produto=1;
+    `;
+
+    const [resp]=await connection.query(command,[id]);
+
+    return resp;
+}

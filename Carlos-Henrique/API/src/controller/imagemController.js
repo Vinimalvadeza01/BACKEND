@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import multer from 'multer';
 import fs from 'fs';
 
-import { inserirImagem,verificarPosicao } from '../repository/imagemRepository.js';
+import { inserirImagem,verificarPosicao,consultarImagensProduto } from '../repository/imagemRepository.js';
 import { verificarProduto } from '../repository/produtoRepository.js';
 
 const endpoints = Router();
@@ -38,6 +38,26 @@ endpoints.post('/imagem/:id/:posicao/inserir', salvarImagem.single('imagemProdut
         const respostaRepository=await inserirImagem(caminho,id,posicao);
 
         resp.send(respostaRepository);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/imagem/consulta/:id', async (req,resp) => {
+
+    try{
+
+        const id=req.params.id;
+
+        const resposta=await consultarImagensProduto(id);
+
+        resp.send(resposta);
     }
 
     catch(err){

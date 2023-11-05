@@ -1,6 +1,10 @@
 import express, { Router } from 'express';
 
-import {inserirProduto,verificarNomeProduto,consultarProdutos,consultaMaisVendidos,consultaMelhorAval,consultaMVCachorro,consultaMVGato,consultaCaesHeader,consultaGatosHeader,consultaPassarosHeader,consultaPeixesHeader,consultaOutrosAnimaisHeader} from '../repository/produtoRepository.js';
+import {inserirProduto,verificarNomeProduto,
+        consultarProdutos,
+        consultaMaisVendidos,consultaMelhorAval,consultaMVCachorro,consultaMVGato,
+        consultaCaesHeader,consultaGatosHeader,consultaPassarosHeader,consultaPeixesHeader,consultaOutrosAnimaisHeader,
+        consultarProduto} from '../repository/produtoRepository.js';
 
 import {verificarCategorias} from '../repository/categoriaRepository.js';
 import {verificarAnimais} from '../repository/animaisRepository.js';
@@ -339,6 +343,26 @@ endpoints.get('/produto/consulta/header/outros', async (req,resp) => {
     try{
 
         const resposta=await consultaOutrosAnimaisHeader();
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/adm/consulta/:id', async (req,resp) => {
+
+    try{
+
+        const id=req.params.id;
+
+        const [resposta]=await consultarProduto(id);
 
         resp.send(resposta);
     }
