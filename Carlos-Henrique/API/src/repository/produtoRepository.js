@@ -480,7 +480,9 @@ export async function consultarProduto(id){
             NM_produto                  as Nome,
             TB_PRODUTO.id_animal        as Animal_ID,
             nm_animal                   as Animal,
+            ds_marca                    as Marca,
             ds_produto                  as Descrição,
+            ds_peso                     as Peso,
             NR_vendas                   as Vendas,
             NR_qntdEstoque              as Estoque,
             VL_preco                    as Preço,
@@ -489,6 +491,7 @@ export async function consultarProduto(id){
             dt_cadastro                 as Cadastro,
             DT_lancamento               as Lançamento,
             VL_avaliacao                as Avaliação,
+            qtd_avaliacoes              as Avaliações,
             QTD_favoritos               as Favoritos,
             NM_adm                      as Adm,
             TB_PRODUTO.id_adm           as Adm_ID
@@ -505,6 +508,38 @@ export async function consultarProduto(id){
             Where TB_produto.ID_produto=?`;
 
     const [resp]=await connection.query(command,[id]);
+
+    return resp;
+}
+
+export async function ultimoProduto(){
+
+    const command=`SELECT ID_PRODUTO FROM tb_produto ORDER BY ID_PRODUTO DESC LIMIT 1;`;
+
+    const [resp]=await connection.query(command,[]);
+
+    return resp;
+}
+
+export async function alterarProduto(produto,id){
+
+    const command=`
+        update tb_produto
+            set nm_produto=?,
+                id_categoria=?,
+                id_animal=?,
+                ds_marca=?,
+                ds_produto=?,
+                ds_peso=?,
+                dt_lancamento=?,
+                bt_disponivel=?,
+                vl_preco=?,
+                nr_desconto=?,
+                nr_qntdEstoque=?
+
+            where id_produto=?`;
+
+    const [resp]=await connection.query(command,[produto.nome,produto.categoria,produto.animal,produto.marca,produto.descricao,produto.peso,produto.lancamento,produto.disponivel,produto.desconto,produto.preco,produto.estoque,id]);
 
     return resp;
 }
