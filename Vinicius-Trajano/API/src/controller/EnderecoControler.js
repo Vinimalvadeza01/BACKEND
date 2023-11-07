@@ -1,25 +1,54 @@
-import {con} from './connection.js';
+import express, {Router } from 'express';
 
 
-export async function Cdenderecio(resposta){
+const server= Router();
 
-    let comando= 
-    `insert into TB_ENDERECO(ds_cep, nm_rua, nm_bairro, ds_numero, ds_completo, nm_estado, nm_cidade)
-	value(?,?,?,?,?,?,?);`
 
-    const [resp]= await con.query(comando, [
-        resposta.cep,
-        resposta.rua,
-        resposta.bairro,
-        resposta.numero,
-        resposta.completo,
-        resposta.estado,
-        resposta.cidade
-    ])
-    return resp;
+server.post ('/Endereco', async (req, resp ) => {
 
+    try {
+        const resposta = req.body;
+
+        // Verificação de campos nulos
+        if(!resposta.nome){
+
+            throw new Error('O nome é obrigatório!');
+        
+        }
+        
+        if(!resposta.email){
+
+            throw new Error('O email e obrigatorio!');
+        
+        }
+        
+        if(!resposta.cpf){
+
+            throw new Error('O cpf é obrigatório!');
+        
+        }
+        
+        if(!resposta.senha){
+
+            throw new Error('A senha é obrigatório!');
+        
+        }
+
+        if(!resposta.nasc){
+
+            throw new Error('A data de nascimento é obrigatório!');
+        
+        }
+
+        const respsd = await Cadastro(resposta);
+        resp.send(respsd)
+    }
+        catch (err) 
+        {
+            resp.status(404).send({
+                erro:err.message
+            });
+        }
     
-
-
-
-}
+    
+    })
