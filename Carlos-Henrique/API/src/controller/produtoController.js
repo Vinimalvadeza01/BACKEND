@@ -401,6 +401,61 @@ endpoints.put('/produto/alterar/:id', async (req,resp) => {
         const produto=req.body;
         const idProduto=req.params.id;
 
+        if(!produto.nome){
+
+            throw new Error('Você não pode colocar um nome nulo para o produto');
+        }
+
+        if(!produto.marca){
+
+            throw new Error('Você não pode deixar o campo marca como sendo nulo');
+        }
+
+        if(!produto.descricao){
+
+            throw new Error('Você não pode colocar uma descrição vazia para o produto');
+        }
+
+        if(!produto.peso){
+
+            throw new Error('Você deve especificar o peso do produto');
+        }
+
+        if(!produto.categoria){
+
+            throw new Error('Você não pode deixar o produto sem uma categoria');
+        }
+
+        if(!produto.animal){
+
+            throw new Error('Você não pode deixar o produto sem um animal especificado');
+        }
+
+        if(!produto.lancamento){
+
+            throw new Error('Você deve definir uma data de lançamento para o produto');
+        }
+
+        if(produto.disponivel==undefined){
+
+            throw new Error('Defina se o produto estará disponível, ou não disponível');
+        }
+
+        if(!produto.preco){
+
+            throw new Error('Preço inválido, defina um preço para o produto');
+        }
+
+        if(!produto.desconto){
+
+            throw new Error('O campo de desconto não pode estar vazio, defina 0% caso não queira nenhum desconto');
+        }
+
+        if(!produto.estoque){
+
+            throw new Error('Defina o estoque do produto');
+        }
+
         const resposta=await alterarProduto(produto,idProduto);
 
         resp.send(resposta);
