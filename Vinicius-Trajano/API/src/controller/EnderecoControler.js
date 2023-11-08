@@ -1,5 +1,5 @@
 import express, {Router } from 'express';
-
+import{ Endereco } from '../repository/EnderecoRepository.js';
 
 const server= Router();
 
@@ -10,39 +10,49 @@ server.post ('/Endereco', async (req, resp ) => {
         const resposta = req.body;
 
         // Verificação de campos nulos
-        if(!resposta.nome){
+        if(!resposta.cep){
 
-            throw new Error('O nome é obrigatório!');
+            throw new Error('O cep é obrigatório!');
         
         }
         
-        if(!resposta.email){
+        if(!resposta.rua){
 
-            throw new Error('O email e obrigatorio!');
+            throw new Error('A rua e obrigatorio!');
         
         }
         
-        if(!resposta.cpf){
+        if(!resposta.bairro){
 
-            throw new Error('O cpf é obrigatório!');
+            throw new Error('O bairro é obrigatório!');
         
         }
         
-        if(!resposta.senha){
+        if(!resposta.numero){
 
-            throw new Error('A senha é obrigatório!');
+            throw new Error('O numero é obrigatório!');
         
         }
 
-        if(!resposta.nasc){
 
-            throw new Error('A data de nascimento é obrigatório!');
-        
+        if(!resposta.estado){
+
+            throw new Error('O estado é obrigado')
         }
 
-        const respsd = await Cadastro(resposta);
-        resp.send(respsd)
+        if(!resposta.cidade){
+
+            throw new Error('A cidade é obrigatoria')
+        }
+
+
+
+
+        const rspd= await Endereco(resposta);
+        resp.send(rspd)
     }
+
+
         catch (err) 
         {
             resp.status(404).send({

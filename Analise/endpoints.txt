@@ -54,3 +54,18 @@ response (200)
     "senha: ""
 }
 
+
+(4) /POST/ /endereco
+
+request body
+
+{
+    "cep": "0",
+    "rua":"",
+    "bairro":"",
+    "numero":"0",
+    "complemento":"",
+    "estdo":"",
+    "cidade":""
+}
+
