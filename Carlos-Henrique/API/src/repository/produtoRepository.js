@@ -541,5 +541,5 @@ export async function alterarProduto(produto,id){
 
     const [resp]=await connection.query(command,[produto.nome,produto.categoria,produto.animal,produto.marca,produto.descricao,produto.peso,produto.lancamento,produto.disponivel,produto.desconto,produto.preco,produto.estoque,id]);
 
-    return resp;
+    return produto;
 }
