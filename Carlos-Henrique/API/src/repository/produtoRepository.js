@@ -234,7 +234,8 @@ export async function consultaMaisVendidos(){
                 Vl_avaliacao as Avaliação,
                 QTD_avaliacoes as Avaliações,
                 VL_preco as Preço,
-                NR_VENDAS as Vendas
+                NR_VENDAS as Vendas,
+                bt_disponivel as Disponivel
 
                 FROM            TB_PRODUTO
 
@@ -243,6 +244,7 @@ export async function consultaMaisVendidos(){
 
                 WHERE           NR_posicao=1
                 AND             nr_vendas>0
+                AND             bt_disponivel=true
                 ORDER BY        NR_VENDAS 	desc
 
                 LIMIT 0,20
@@ -259,7 +261,8 @@ export async function consultaMelhorAval(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -268,6 +271,8 @@ export async function consultaMelhorAval(){
 
             WHERE           NR_posicao=1
             AND             qtd_avaliacoes>0
+            AND             bt_disponivel=true
+
             ORDER BY        vl_avaliacao 	desc
             LIMIT 0,20`;
     
@@ -284,7 +289,8 @@ export async function consultaMVCachorro(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -295,6 +301,7 @@ export async function consultaMVCachorro(){
             AND nr_vendas>0 OR 
             qtd_avaliacoes>0
             AND id_animal=1
+            AND bt_disponivel=true
         
             ORDER BY VL_AVALIACAO desc,NR_VENDAS desc
             LIMIT 0, 20
@@ -311,7 +318,8 @@ export async function consultaMVGato(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -322,6 +330,7 @@ export async function consultaMVGato(){
             AND nr_vendas>0 OR 
             qtd_avaliacoes>0
             AND id_animal=2
+            AND bt_disponivel=true
 
             ORDER BY VL_AVALIACAO desc,NR_VENDAS desc
             LIMIT 0, 20
@@ -339,7 +348,8 @@ export async function consultaCaesHeader(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -348,6 +358,7 @@ export async function consultaCaesHeader(){
                 
 			WHERE id_animal=1
             AND nr_vendas>0
+            AND bt_disponivel=true
             
             ORDER BY RAND()
             LIMIT 0,4
@@ -367,7 +378,8 @@ export async function consultaGatosHeader(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -404,7 +416,8 @@ export async function consultaPassarosHeader(){
                 
 			WHERE id_animal=3
             AND nr_vendas>0
-            
+            AND bt_disponivel=true
+
             ORDER BY RAND()
             LIMIT 0,4
     `;
@@ -423,7 +436,8 @@ export async function consultaPeixesHeader(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -432,6 +446,7 @@ export async function consultaPeixesHeader(){
                 
 			WHERE id_animal=4
             AND nr_vendas>0
+            AND bt_disponivel=true
             
             ORDER BY RAND()
             LIMIT 0,4
@@ -451,7 +466,8 @@ export async function consultaOutrosAnimaisHeader(){
             Vl_avaliacao as Avaliação,
             QTD_avaliacoes as Avaliações,
             VL_preco as Preço,
-            NR_VENDAS as Vendas
+            NR_VENDAS as Vendas,
+            bt_disponivel as Disponivel
 
             FROM            TB_PRODUTO
 
@@ -460,6 +476,7 @@ export async function consultaOutrosAnimaisHeader(){
                 
 			WHERE id_animal=5
             AND nr_vendas>0
+            AND bt_disponivel=true
             
             ORDER BY RAND()
             LIMIT 0,4

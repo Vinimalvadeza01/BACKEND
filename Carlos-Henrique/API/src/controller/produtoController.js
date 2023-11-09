@@ -446,7 +446,7 @@ endpoints.put('/produto/alterar/:id', async (req,resp) => {
             throw new Error('Preço inválido, defina um preço para o produto');
         }
 
-        if(!produto.desconto){
+        if(!produto.desconto && produto.desconto!==0){
 
             throw new Error('O campo de desconto não pode estar vazio, defina 0% caso não queira nenhum desconto');
         }
