@@ -1,5 +1,5 @@
 import express, {Router } from 'express';
-import{ Endereco } from '../repository/EnderecoRepository.js';
+import{ CEndereco } from '../repository/EnderecoRepository.js';
 
 const server= Router();
 
@@ -48,7 +48,7 @@ server.post ('/Endereco', async (req, resp ) => {
 
 
 
-        const rspd= await Endereco(resposta);
+        const rspd= await CEndereco(resposta);
         resp.send(rspd)
     }
 
@@ -62,3 +62,5 @@ server.post ('/Endereco', async (req, resp ) => {
     
     
     })
+
+    export default server;
