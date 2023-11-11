@@ -28,6 +28,26 @@ export async function verificarPosicao(id,posicao){
     return resp;
 }
 
+export async function consultarCapaProduto(id){
+
+    let command=`
+
+        Select 
+        id_imagem 	as ID, 
+        ds_imagem 	as Imagem, 
+        id_produto 	as Produto, 
+        nr_posicao 	as Posição
+        
+        from tb_imagem
+        
+        Where id_produto=?
+        AND nr_posicao=1`;
+
+    const [resp]=await connection.query(command,[id]);
+
+    return resp;
+}
+
 export async function consultarImagensSecundariasProduto(id){
 
     let command=`
@@ -50,36 +70,16 @@ export async function consultarImagensSecundariasProduto(id){
     return resp;
 }
 
-export async function consultarCapaProduto(id){
+export async function alterarImagePrincipal(imagem,idProduto,idImagem){
 
-    let command=`
+    let command=`			
+        update tb_imagem
+            set ds_imagem=?,
+                id_produto=?,
+                nr_posicao=1
+        where   id_imagem=?`
 
-        Select 
-        id_imagem 	as ID, 
-        ds_imagem 	as Imagem, 
-        id_produto 	as Produto, 
-        nr_posicao 	as Posição
-        
-        from tb_imagem
-        
-        Where id_produto=?
-        AND nr_posicao=1;
-`;
-}
-
-export async function alterarImagePrincipal(id){
-
-    let command=``
-}
-
-export async function deletarImagePrincipal(id){
-
-    let command=`            
-            DELETE from tb_imagem
-                where id_produto=?
-                and	 nr_posicao=1`;
-
-    const [resp]=await connection.query(command,[id]);
+    const [resp]=await connection.query(command,[imagem,idProduto,idImagem]);
 
     return resp.affectedRows;
 }

@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import multer from 'multer';
 import fs from 'fs';
 
-import { inserirImagem,verificarPosicao,consultarImagensSecundariasProduto, alterarImagePrincipal, deletarImagePrincipal } from '../repository/imagemRepository.js';
+import { inserirImagem,verificarPosicao,consultarCapaProduto,consultarImagensSecundariasProduto, alterarImagePrincipal } from '../repository/imagemRepository.js';
 import { verificarProduto } from '../repository/produtoRepository.js';
 
 const endpoints = Router();
@@ -54,10 +54,20 @@ endpoints.get('/imagem/consulta/capa/:id', async (req,resp) => {
     try{
 
         const id=req.params.id;
+
+        const [resposta]=await consultarCapaProduto(id);
+
+        resp.send(resposta);
     }
 
-    catch(err){}
+    catch(err){
+
+        resp.status(404).send({
+            erro:err.message
+        });
+    }
 });
+
 endpoints.get('/imagem/consulta/:id', async (req,resp) => {
 
     try{
@@ -78,16 +88,37 @@ endpoints.get('/imagem/consulta/:id', async (req,resp) => {
     }
 });
 
-endpoints.post('/imagem/alterar/capa/:id', salvarImagem.single('imagemProduto'), async (req,resp) => {
+endpoints.put('/imagem/alterar/capa/:id', salvarImagem.single('imagemProduto'), async (req,resp) => {
 
     try{
 
-        const id=req.params.id;
+        const idProduto=req.params.id;
 
-        fs.unlink('/storage/images/imagensProdutos', (err) => {
+        const [consultarArquivo]=await consultarCapaProduto(idProduto);
+
+        const idImagem=consultarArquivo.ID;
+
+        // Excluindo o arquivo da capa antiga
+        fs.unlink(`${consultarArquivo.Imagem}`, (err) => {
             if (err) throw err;
-        
-          });
+        });
+
+        // Adicionando nova capa
+        if(!req.file){
+
+            throw new Error('Não foi possível adicionar a imagem');
+        }
+
+        const caminho=req.file.path;
+
+        const alterarCapa=await alterarImagePrincipal(caminho,idProduto,idImagem);
+
+        if(alterarCapa===0){
+
+            throw new Error('Não possível alterar a capa do produto');
+        }
+
+        resp.send('');
     }
 
     catch(err){
