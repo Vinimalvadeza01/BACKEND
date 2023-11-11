@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import multer from 'multer';
 import fs from 'fs';
 
-import { inserirImagem,verificarPosicao,consultarImagensProduto } from '../repository/imagemRepository.js';
+import { inserirImagem,verificarPosicao,consultarImagensSecundariasProduto, alterarImagePrincipal, deletarImagePrincipal } from '../repository/imagemRepository.js';
 import { verificarProduto } from '../repository/produtoRepository.js';
 
 const endpoints = Router();
@@ -49,15 +49,45 @@ endpoints.post('/imagem/:id/:posicao/inserir', salvarImagem.single('imagemProdut
     }
 });
 
+endpoints.get('/imagem/consulta/capa/:id', async (req,resp) => {
+
+    try{
+
+        const id=req.params.id;
+    }
+
+    catch(err){}
+});
 endpoints.get('/imagem/consulta/:id', async (req,resp) => {
 
     try{
 
         const id=req.params.id;
 
-        const resposta=await consultarImagensProduto(id);
+        const resposta=await consultarImagensSecundariasProduto(id);
 
         resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.post('/imagem/alterar/capa/:id', salvarImagem.single('imagemProduto'), async (req,resp) => {
+
+    try{
+
+        const id=req.params.id;
+
+        fs.unlink('/storage/images/imagensProdutos', (err) => {
+            if (err) throw err;
+        
+          });
     }
 
     catch(err){
