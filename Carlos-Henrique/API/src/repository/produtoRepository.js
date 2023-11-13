@@ -531,7 +531,7 @@ export async function consultarProduto(id){
 
 export async function ultimoProduto(){
 
-    const command=`SELECT ID_PRODUTO FROM tb_produto ORDER BY ID_PRODUTO DESC LIMIT 1;`;
+    const command=`SELECT ID_PRODUTO FROM tb_produto ORDER BY ID_PRODUTO DESC LIMIT 1`;
 
     const [resp]=await connection.query(command,[]);
 
