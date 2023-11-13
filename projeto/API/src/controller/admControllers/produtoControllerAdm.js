@@ -163,20 +163,20 @@ endpoints.get('/produto/ultimoProduto', async (req,resp) => {
     }
 });
 
-endpoints.get('/produto/adm/consulta', async (req,resp) => {
+endpoints.post('/produto/adm/consulta', async (req,resp) => {
 
     try{
 
-        const {semEstoque,naoLancados,semLancamento,porCategoria,categoria,porAnimal,animal,porAdministrador,adm,cadastroEspecifico,dataEspecifica,produtoEspecifico,produto,maisVendidos,maisFavoritados,menorEstoque,maisRecentes} = req.query;
+        const produto = req.body;
 
-        if(cadastroEspecifico && !dataEspecifica){
+        if(produto.cadastroEspecifico && !produto.dataEspecifica){
 
             throw new Error('A data específicada é inválida');
         }
 
         // Verificação para filtros que não podem estar ativos juntos
 
-        if(menorEstoque && semEstoque){
+        if(produto.menorEstoque && produto.semEstoque){
 
             throw new Error('O filtro de "Quantidade em estoque" e o filtro "Sem estoque" não podem ser usados ao mesmo tempo');
         }
@@ -184,44 +184,44 @@ endpoints.get('/produto/adm/consulta', async (req,resp) => {
         // Para os filtros de data
         const erroData1='O filtro que lista os produtos mais recentes não pode ser usado junto de qualquer outro filtro de data!';
 
-        if(maisRecentes && cadastroEspecifico){
+        if(produto.maisRecentes && produto.cadastroEspecifico){
 
             throw new Error(erroData1);
 
         }
 
         const erroData2='O filtro de lançamento específico não pode ser usado junto de qualquer outro filtro de data!';
-        if(cadastroEspecifico && naoLancados){
+        if(produto.cadastroEspecifico && produto.naoLancados){
 
             throw new Error(erroData2);
         }
 
-        else if(cadastroEspecifico && semLancamento){
+        else if(produto.cadastroEspecifico && produto.semLancamento){
 
             throw new Error(erroData2);
         }
 
-        else if(cadastroEspecifico && maisRecentes){
+        else if(produto.cadastroEspecifico && produto.maisRecentes){
 
             throw new Error(erroData2);
         }
 
-        if(porCategoria && !categoria){
+        if(produto.porCategoria && !produto.categoria){
 
             throw new Error('Se o filtro de categoria está ativo, o ID da categoria deve ser definido!');
         }
 
-        if(porAnimal && !animal){
+        if(produto.porAnimal && !produto.animal){
 
             throw new Error('Se o filtro de animal está ativo, o ID do animal deve ser definido!');
         }
 
-        if(porAdministrador && !adm){
+        if(produto.porAdministrador && !produto.adm){
 
             throw new Error('Se o filtro de administrador está ativo, o ID do administrador deve ser definido!');
         }
 
-        const respostaAPI=await consultarProdutos({semEstoque,naoLancados,semLancamento,porCategoria,categoria,porAnimal,animal,porAdministrador,adm,cadastroEspecifico,dataEspecifica,produtoEspecifico,produto,maisVendidos,maisFavoritados,menorEstoque,maisRecentes});
+        const respostaAPI=await consultarProdutos(produto);
 
         resp.send(respostaAPI);
     }
