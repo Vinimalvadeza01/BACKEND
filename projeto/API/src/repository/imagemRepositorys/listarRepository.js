@@ -41,3 +41,24 @@ export async function consultarImagensSecundariasProduto(id){
 
     return resp;
 }
+
+export async function consultarImageSecPosicao(id,posicao){
+
+    let command=`
+
+        Select 
+        id_imagem 	as ID, 
+        ds_imagem 	as Imagem, 
+        id_produto 	as Produto, 
+        nr_posicao 	as Posição
+        
+        from tb_imagem
+        
+        Where id_produto=?
+        AND   nr_posicao=?
+    `;
+
+    const [resp]=await connection.query(command,[id,posicao]);
+
+    return resp;
+}

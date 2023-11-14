@@ -4,6 +4,8 @@ import fs from 'fs';
 
 import {inserirImagem,verificarPosicao} from '../../repository/imagemRepositorys/adm/cadastroRepository.js';
 import {verificarProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
+import {alterarImagePrincipal, alterarImageSecundaria} from '../../repository/imagemRepositorys/adm/alterarRepository.js';
+import { consultarCapaProduto, consultarImagensSecundariasProduto, consultarImageSecPosicao } from '../../repository/imagemRepositorys/listarRepository.js';
 
 const endpoints = Router();
 const salvarImagem=multer({dest:'storage/images/imagensProdutos'});
@@ -90,5 +92,56 @@ endpoints.put('/imagem/alterar/capa/:id', salvarImagem.single('imagemProduto'), 
         });
     }
 });
+
+endpoints.put('/imagem/alterar/imageSec/:id/:posicao', salvarImagem.single('imagemProduto'), async (req,resp) => {
+
+    try{
+
+        const idProduto=req.params.id;
+        const posicao=req.params.posicao;
+
+        if(posicao==1){
+
+            throw new Error('A posição não pode ser 1, pois é a posição da capa do produto!');
+        }
+
+        const [consultarArquivo]=await consultarImageSecPosicao(idProduto,posicao);
+
+        const idImagem=consultarArquivo.ID;
+
+        // Excluindo o arquivo da capa antiga
+        fs.unlink(`${consultarArquivo.Imagem}`, (err) => {
+            if (err){
+                
+            };
+          });
+
+        // Adicionando nova capa
+        if(!req.file){
+
+            throw new Error('Não foi possível adicionar a imagem');
+        }
+
+        const caminho=req.file.path;
+
+        const alterarCapa=await alterarImageSecundaria(caminho,idProduto,posicao,idImagem);
+
+        if(alterarCapa===0){
+
+            throw new Error('Não possível alterar esta imagem secundária do produto');
+        }
+
+        resp.send('');
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
 
 export default endpoints;
