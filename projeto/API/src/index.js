@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 
 import produtoController from './controller/userControllers/produtoController.js';
+import clienteController from './controller/userControllers/clienteController.js';
 
 import animalController from './controller/controllersGerais/animalController.js';
 import categoriaController from './controller/controllersGerais/categoriaController.js';
@@ -11,8 +12,6 @@ import imagemControllerAdm from './controller/admControllers/imagemControllerAdm
 import produtoControllerAdm from './controller/admControllers/produtoControllerAdm.js';
 import clienteControllerAdm from './controller/admControllers/clienteControllerAdm.js';
 import loginAdmController from './controller/admControllers/loginAdmController.js';
-
-// import CadastroController from './controller/CadastroController.js';
 
 const server=express();
 server.use(cors());
@@ -26,10 +25,9 @@ server.use(produtoControllerAdm);
 server.use(imagemControllerAdm);
 server.use(clienteControllerAdm);
 server.use(loginAdmController);
-
+ 
 server.use(categoriaController);
 server.use(animalController);
 
 server.use(produtoController);
-
-// server.use(CadastroController);
+server.use(clienteController);

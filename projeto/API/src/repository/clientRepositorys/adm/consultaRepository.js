@@ -88,7 +88,7 @@ export async function consultarClientes(filtro){
 
         puxarCliente.push(filtro.cliente);
 
-        colunasWhere[contWhere]=` NM_nome like('%${puxarCliente[0]}%') OR DS_email like('%${puxarCliente[0]}%') OR DS_cpf like('%${puxarCliente[0]}%');`;
+        colunasWhere[contWhere]=` NM_nome like('%${puxarCliente[0]}%') OR DS_email like('%${puxarCliente[0]}%') OR DS_cpf like('%${puxarCliente[0]}%')`;
     }
 
     // Filtros para o order BY
@@ -100,7 +100,7 @@ export async function consultarClientes(filtro){
 
     if(filtro.ordemAlfabetica){
 
-        colunasOrder[contOrder]=` NM_nome asc`;
+        colunasOrder[contOrder]=` nm_nome asc`;
         contOrder=contOrder+1;
     }
 
@@ -157,7 +157,7 @@ export async function consultarClientes(filtro){
     }
 
     let comandoFinal=comandoBase+comandosWhere+comandosOrder;
-    
+
     const [resp]= await connection.query(comandoFinal,[filtro.semPedidos,filtro.semEndereco,filtro.anoNascimento,filtro.ano,filtro.estadoEspecifico,filtro.estado,filtro.cidadeEspecifica,filtro.cidade,filtro.clienteEspecifico,filtro.cliente,filtro.ordemAlfabetica,filtro.nascimentoMaisNovos,filtro.nascimentoMaisVelhos]);
 
     return resp;

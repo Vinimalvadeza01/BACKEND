@@ -1,7 +1,7 @@
 import express, { Router } from 'express';
 
-import { inserirProduto, verificarNomeProduto,ultimoProduto} from '../../repository/produtoRepositorys/adm/cadastroRepository.js';
-import { consultarProdutos } from '../../repository/produtoRepositorys/adm/consultaRepository.js';
+import { inserirProduto, verificarNomeProduto,ultimoProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
+import { consultarProdutos } from '../../repository/produtoRepositorys/adm/pageConsultaRepository.js';
 import { verificarCategorias } from '../../repository/categoriaRepositorys/categoriaRepository.js';
 import { verificarAnimais } from '../../repository/animalRepositorys/animalRepository.js';
 import { verificarAdm } from '../../repository/loginAdmRepositorys/admRepository.js';

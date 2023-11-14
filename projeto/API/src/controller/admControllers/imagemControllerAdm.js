@@ -3,7 +3,7 @@ import multer from 'multer';
 import fs from 'fs';
 
 import {inserirImagem,verificarPosicao} from '../../repository/imagemRepositorys/adm/cadastroRepository.js';
-import {verificarProduto} from '../../repository/produtoRepositorys/adm/cadastroRepository.js';
+import {verificarProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
 
 const endpoints = Router();
 const salvarImagem=multer({dest:'storage/images/imagensProdutos'});
