@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 
 import { inserirProduto, verificarNomeProduto,ultimoProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
 import { consultarProdutos } from '../../repository/produtoRepositorys/adm/pageConsultaRepository.js';
+import { consultarProduto, alterarProduto } from '../../repository/produtoRepositorys/adm/pageAlterarRepository.js';
 import { verificarCategorias } from '../../repository/categoriaRepositorys/categoriaRepository.js';
 import { verificarAnimais } from '../../repository/animalRepositorys/animalRepository.js';
 import { verificarAdm } from '../../repository/loginAdmRepositorys/admRepository.js';
@@ -224,6 +225,102 @@ endpoints.post('/produto/adm/consulta', async (req,resp) => {
         const respostaAPI=await consultarProdutos(produto);
 
         resp.send(respostaAPI);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/produto/adm/consulta/:id', async (req,resp) => {
+
+    try{
+
+        const id=req.params.id;
+
+        const [resposta]=await consultarProduto(id);
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.put('/produto/alterar/:id', async (req,resp) => {
+
+    try{
+
+        const produto=req.body;
+        const idProduto=req.params.id;
+
+        if(!produto.nome){
+
+            throw new Error('Você não pode colocar um nome nulo para o produto');
+        }
+
+        if(!produto.marca){
+
+            throw new Error('Você não pode deixar o campo marca como sendo nulo');
+        }
+
+        if(!produto.descricao){
+
+            throw new Error('Você não pode colocar uma descrição vazia para o produto');
+        }
+
+        if(!produto.peso){
+
+            throw new Error('Você deve especificar o peso do produto');
+        }
+
+        if(!produto.categoria){
+
+            throw new Error('Você não pode deixar o produto sem uma categoria');
+        }
+
+        if(!produto.animal){
+
+            throw new Error('Você não pode deixar o produto sem um animal especificado');
+        }
+
+        if(!produto.lancamento){
+
+            throw new Error('Você deve definir uma data de lançamento para o produto');
+        }
+
+        if(produto.disponivel==undefined){
+
+            throw new Error('Defina se o produto estará disponível, ou não disponível');
+        }
+
+        if(!produto.preco){
+
+            throw new Error('Preço inválido, defina um preço para o produto');
+        }
+
+        if(!produto.desconto && produto.desconto!==0){
+
+            throw new Error('O campo de desconto não pode estar vazio, defina 0% caso não queira nenhum desconto');
+        }
+
+        if(!produto.estoque){
+
+            throw new Error('Defina o estoque do produto');
+        }
+
+        const resposta=await alterarProduto(produto,idProduto);
+
+        resp.send(resposta);
     }
 
     catch(err){

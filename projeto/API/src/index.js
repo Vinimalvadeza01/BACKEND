@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 
 import produtoController from './controller/userControllers/produtoController.js';
+import imagemController from './controller/userControllers/imageController.js';
 import clienteController from './controller/userControllers/clienteController.js';
 
 import animalController from './controller/controllersGerais/animalController.js';
@@ -30,4 +31,5 @@ server.use(categoriaController);
 server.use(animalController);
 
 server.use(produtoController);
+server.use(imagemController);
 server.use(clienteController);
