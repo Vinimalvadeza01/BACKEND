@@ -63,7 +63,7 @@ endpoints.put('/imagem/alterar/capa/:id', salvarImagem.single('imagemProduto'), 
 
         // Excluindo o arquivo da capa antiga
         fs.unlink(`${consultarArquivo.Imagem}`, (err) => {
-            if (err) throw err;
+            if (err){};
         });
 
         // Adicionando nova capa
