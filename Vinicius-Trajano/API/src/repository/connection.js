@@ -9,4 +9,3 @@ let con = await mysql2.createConnection({
 
 console.log('bd conectado')
 
-export {con} 

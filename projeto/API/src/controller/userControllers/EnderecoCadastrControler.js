@@ -1,5 +1,5 @@
 import express, {Router } from 'express';
-import{ CEndereco } from '../repository/EnderecoRepository.js';
+import{ CEndereco } from '../../repository/clientRepositorys/CadastroEnderecoRepository.js';
 
 const server= Router();
 

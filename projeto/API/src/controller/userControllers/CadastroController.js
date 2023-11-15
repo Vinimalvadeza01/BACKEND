@@ -1,11 +1,11 @@
-import { Cadastro, VerificarCpf, VerificarEmail } from '../repository/cadastroRepository.js';
+import { Cadastro, VerificarCpf, VerificarEmail } from '../../repository/clientRepositorys/cadastroRepository.js';
 import express, {Router } from 'express';
 
 
 const server= Router();
 
 
-server.post ('/cliente', async (req, resp ) => {
+server.post ('/Cadastro', async (req, resp ) => {
 
     try {
         const resposta = req.body;
