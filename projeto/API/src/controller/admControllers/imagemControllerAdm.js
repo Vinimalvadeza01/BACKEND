@@ -5,7 +5,7 @@ import fs from 'fs';
 import {inserirImagem,verificarPosicao} from '../../repository/imagemRepositorys/adm/cadastroRepository.js';
 import {verificarProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
 import {alterarImagePrincipal, alterarImageSecundaria} from '../../repository/imagemRepositorys/adm/alterarRepository.js';
-import { consultarCapaProduto, consultarImagensSecundariasProduto, consultarImageSecPosicao } from '../../repository/imagemRepositorys/listarRepository.js';
+import { consultarCapaProduto, consultarImageSecPosicao } from '../../repository/imagemRepositorys/listarRepository.js';
 
 const endpoints = Router();
 const salvarImagem=multer({dest:'storage/images/imagensProdutos'});
