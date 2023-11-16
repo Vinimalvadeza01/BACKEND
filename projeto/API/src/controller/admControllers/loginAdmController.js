@@ -1,6 +1,7 @@
 import express, { Router } from 'express';
 
 import {listarAdministradores} from '../../repository/loginAdmRepositorys/admRepository.js';
+import {loginAdm} from '../../repository/loginAdmRepositorys/loginRepository.js';
 
 const endpoints = Router();
 
@@ -27,8 +28,6 @@ endpoints.post('/adm/login', async (req, resp) =>{
     try{
         const usuario = req.body;
 
-        const resposta = await LoginAdm (usuario);
-
         if(!usuario.adm){
 
             throw new Error('É necessário definir nome de usuário!');
@@ -39,17 +38,19 @@ endpoints.post('/adm/login', async (req, resp) =>{
             throw new Error('É necessário escrever a senha da sua conta!');
         }
 
+        const [resposta] = await loginAdm (usuario);
+
         if(resposta.length==0){
 
             throw new Error('Usuário não encontrado!');
         }
 
-        if(usuario.senha!==resposta[0].Senha){
+        if(usuario.senha!==resposta.Senha){
 
             throw new Error('Senha incorreta!');
         }
 
-        resp.send('Logado Com Sucesso');
+        resp.send(resposta);
 
     } catch (err){
         resp.status(404).send({

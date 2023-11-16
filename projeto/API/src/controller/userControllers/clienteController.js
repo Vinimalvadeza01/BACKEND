@@ -81,7 +81,7 @@ endpoints.post('/usuario/login', async (req, resp) =>{
     try{
         const {emailCPF,senha} = req.body;
 
-        const resposta = await login(emailCPF,senha);
+        const [resposta] = await login(emailCPF,senha);
 
         if(!emailCPF){
 
@@ -98,7 +98,7 @@ endpoints.post('/usuario/login', async (req, resp) =>{
             throw new Error('Usuário não encontrado!');
         }
 
-        if(senha!==resposta[0].Senha){
+        if(senha!==resposta.Senha){
 
             throw new Error('Senha incorreta!');
         }
