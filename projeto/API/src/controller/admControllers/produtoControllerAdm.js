@@ -127,7 +127,6 @@ endpoints.post('/produto/inserir', async (req,resp) => {
         }
 
         // Verifica se existe um produto com mesmo nome
-        
         const verifNome=await verificarNomeProduto(produto.nome);
 
         if(verifNome.length>0){

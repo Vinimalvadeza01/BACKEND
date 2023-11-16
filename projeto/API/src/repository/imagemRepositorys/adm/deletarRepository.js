@@ -11,3 +11,16 @@ export async function deletarImagensProduto(id){
 
     return resp;
 }
+
+export async function deletarImagesSec(id,posicao){
+
+    const command=`
+        DELETE from tb_imagem
+        WHERE id_produto=?
+        AND   nr_posicao=?
+    `;
+
+    const [resp]=await connection.query(command,[id,posicao]);
+
+    return resp;
+}
