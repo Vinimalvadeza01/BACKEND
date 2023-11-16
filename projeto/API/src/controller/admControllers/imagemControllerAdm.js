@@ -6,6 +6,7 @@ import {inserirImagem,verificarPosicao} from '../../repository/imagemRepositorys
 import {verificarProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
 import {alterarImagePrincipal, alterarImageSecundaria} from '../../repository/imagemRepositorys/adm/alterarRepository.js';
 import { consultarCapaProduto, consultarImageSecPosicao } from '../../repository/imagemRepositorys/listarRepository.js';
+import { deletarImagesSec } from '../../repository/imagemRepositorys/adm/deletarRepository.js';
 
 const endpoints = Router();
 const salvarImagem=multer({dest:'storage/images/imagensProdutos'});
@@ -132,6 +133,36 @@ endpoints.put('/imagem/alterar/imageSec/:id/:posicao', salvarImagem.single('imag
         }
 
         resp.send('');
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.delete('/imagem/deletar/imageSec/:id/:posicao', async (req,resp) => {
+
+    try{
+
+        const idProduto=req.params.id;
+        const posicao=req.params.posicao;
+
+        const [consultarArquivo]=await consultarImageSecPosicao(idProduto,posicao);
+
+        // Excluindo o arquivo da imagem antiga
+        fs.unlink(`${consultarArquivo.Imagem}`, (err) => {
+            if (err){
+                        
+            };
+        });
+
+        const respApi=await deletarImagesSec(idProduto,posicao);
+
+        resp.send('Imagem deletada');
     }
 
     catch(err){
