@@ -93,7 +93,7 @@ endpoints.post('/usuario/login', async (req, resp) =>{
             throw new Error('É necessário escrever a senha da sua conta!');
         }
 
-        if(resposta.length==0){
+        if(!resposta){
 
             throw new Error('Usuário não encontrado!');
         }
