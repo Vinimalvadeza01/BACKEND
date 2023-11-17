@@ -17,12 +17,7 @@ export async function CEndereco(resposta){
         resposta.cidade
     ])
 
-    resposta.cliente=resp.insertId
+    resposta.cliente=resp.insertId;
 
     return resp;
-
-    
-
-
-
 }
