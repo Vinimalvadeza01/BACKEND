@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { login } from "../../repository/clientRepositorys/loginRepository.js";
+import {  Cadastro, VerificarCpf } from "../../repository/clientRepositorys/cadastroRepository.js";
+
 
 const endpoints=Router();
 
@@ -51,13 +53,7 @@ endpoints.post ('/Cadastro', async (req, resp ) => {
 
          
 
-         const VerifcEmail =await VerificarEmail(resposta.email);
-
          
-         if(VerifcEmail.length>0){
- 
-            throw new Error('Esse E-mail já foi cadastrado!');
-        }
         
         //Confrima senha
 

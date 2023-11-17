@@ -28,17 +28,7 @@ export async function Cadastro(resposta){
 
 
 
-export async function VerificarEmail(email){
-    const cn =
-    `
-    SELECT id_cliente    as id,
-          ds_email       as email
-  FROM tb_cliente WHERE ds_email=?;
-  `
 
-  const [resp] = await connection.query(cn, [email])
-  return resp;
-}
 
 export async function VerificarCpf(cpf){
     const cn =
