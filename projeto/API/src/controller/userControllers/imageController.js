@@ -23,7 +23,7 @@ endpoints.get('/imagem/consulta/capa/:id', async (req,resp) => {
     }
 });
 
-endpoints.get('/imagem/consulta/:id', async (req,resp) => {
+endpoints.get('/imagem/consulta/sec/:id', async (req,resp) => {
 
     try{
 

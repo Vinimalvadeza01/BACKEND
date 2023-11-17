@@ -64,3 +64,16 @@ export async function alterarProduto(produto,id){
 
     return resp;
 }
+
+export async function deletarProduto(id){
+
+    const command=`
+    
+        DELETE from tb_produto
+        WHERE id_produto=?
+    `;
+
+    const [resp]=await connection.query(command,[id]);
+
+    return resp.affectedRows;
+}

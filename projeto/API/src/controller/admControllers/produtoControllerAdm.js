@@ -1,11 +1,14 @@
 import express, { Router } from 'express';
+import fs from 'fs';
 
 import { inserirProduto, verificarNomeProduto,ultimoProduto} from '../../repository/produtoRepositorys/adm/pageCadastroRepository.js';
 import { consultarProdutos } from '../../repository/produtoRepositorys/adm/pageConsultaRepository.js';
-import { consultarProduto, alterarProduto } from '../../repository/produtoRepositorys/adm/pageAlterarRepository.js';
+import { consultarProduto, alterarProduto,deletarProduto } from '../../repository/produtoRepositorys/adm/pageAlterarRepository.js';
+import { deletarImagensProduto } from '../../repository/imagemRepositorys/adm/deletarRepository.js';
 import { verificarCategorias } from '../../repository/categoriaRepositorys/categoriaRepository.js';
 import { verificarAnimais } from '../../repository/animalRepositorys/animalRepository.js';
 import { verificarAdm } from '../../repository/loginAdmRepositorys/admRepository.js';
+import {consultarCapaProduto, consultarImagensSecundariasProduto} from '../../repository/imagemRepositorys/listarRepository.js';
 
 const endpoints = Router();
 
@@ -124,7 +127,6 @@ endpoints.post('/produto/inserir', async (req,resp) => {
         }
 
         // Verifica se existe um produto com mesmo nome
-        
         const verifNome=await verificarNomeProduto(produto.nome);
 
         if(verifNome.length>0){
@@ -321,6 +323,49 @@ endpoints.put('/produto/alterar/:id', async (req,resp) => {
         const resposta=await alterarProduto(produto,idProduto);
 
         resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.delete('/produto/adm/excluir/:id', async (req,resp) => {
+
+    try{
+
+        const id=req.params.id;
+
+        const [capa]=await consultarCapaProduto(id);
+        const imagesSecs=await consultarImagensSecundariasProduto(id);
+
+        // Excluindo o arquivo da capa antiga
+        fs.unlink(`${capa.Imagem}`, (err) => {
+            if (err){
+                        
+            };
+        });
+
+        // For para deletar os arquivos das imagens secundárias
+        for(let item of imagesSecs){
+
+            fs.unlink(`${item.Imagem}`, (err) => {
+                if (err){
+                            
+                };
+            });
+        }
+
+        // Deleta todas as imagens que possuam aquele id de produto em específico
+        const respDeleteImagens=await deletarImagensProduto(id);
+
+        const respDeletarInfsProduto=await deletarProduto(id);
+
+        resp.send('');
     }
 
     catch(err){

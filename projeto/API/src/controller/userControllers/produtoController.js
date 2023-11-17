@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 
 import {consultaCaesHeader,consultaGatosHeader,consultaPassarosHeader,consultaPeixesHeader,consultaOutrosAnimaisHeader} from '../../repository/produtoRepositorys/headerRepository.js';
 import {consultaMaisVendidos,consultaMelhorAval,consultaMVCachorro,consultaMVGato} from '../../repository/produtoRepositorys/homePageRepository.js';
+import { consultarProdutos } from '../../repository/produtoRepositorys/consultaProdutos.js';
 
 const endpoints = Router();
 
@@ -139,6 +140,26 @@ endpoints.get('/produto/consulta/MVGato', async (req, resp) =>{
         resp.status(400).send({
             erro: err.message
         })
+    }
+});
+
+endpoints.post('/produto/consulta', async (req,resp) => {
+
+    try{
+
+        const filtros=req.body;
+
+        const resposta=await consultarProdutos(filtros);
+
+        resp.send(resposta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
     }
 });
 
