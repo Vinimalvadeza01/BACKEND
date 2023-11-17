@@ -5,7 +5,7 @@ import {  Cadastro, VerificarCpf } from "../../repository/clientRepositorys/cada
 
 const endpoints=Router();
 
-endpoints.post ('/Cadastro', async (req, resp ) => {
+endpoints.post ('/cliente/Cadastro', async (req, resp ) => {
 
     try {
         const resposta = req.body;
@@ -41,9 +41,7 @@ endpoints.post ('/Cadastro', async (req, resp ) => {
         
         }
         
-
          // Verifica se o cliente nao esta repetindo dados de outro cliente
-        
          const VerifcCpf =await VerificarCpf(resposta.cpf);
 
          if(VerifcCpf.length>0){
@@ -51,21 +49,14 @@ endpoints.post ('/Cadastro', async (req, resp ) => {
              throw new Error('Já existe um cadastro feito com esse CPF!');
          }
 
-         
-
-         
-        
         //Confrima senha
-
-        
-
         const respsd = await Cadastro(resposta);
         resp.send(respsd)
     } 
     
     catch (err) 
     {
-        resp.status(401).send({
+        resp.status(404).send({
             erro:err.message
         });
     }
@@ -99,7 +90,7 @@ endpoints.post('/usuario/login', async (req, resp) =>{
             throw new Error('Senha incorreta!');
         }
 
-        resp.send('Logado Com Sucesso');
+        resp.send(resposta);
 
     } catch (err){
         resp.status(404).send({

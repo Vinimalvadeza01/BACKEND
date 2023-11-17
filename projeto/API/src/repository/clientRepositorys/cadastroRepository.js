@@ -6,7 +6,7 @@ export async function Cadastro(resposta){
   let comando = 
    `
    INSERT INTO TB_CLIENTE  (nm_nome, ds_email, ds_cpf, dt_nasc, ds_senha, qtd_pedidos, id_endereco )
-   VALUES (?,?,?,?,?,0, 0)
+   VALUES (?,?,?,?,?,0, null)
   `
   const [resp] = await connection.query(comando, [
     resposta.nome,
@@ -18,17 +18,13 @@ export async function Cadastro(resposta){
     resposta.endereco
  ])
 
-  resposta.endereco=resp.insertId
+  resposta.id=resp.insertId
         
  return resp;
 }
 
 
 // gets para verificar se email, cpf são repetidos 
-
-
-
-
 
 export async function VerificarCpf(cpf){
     const cn =

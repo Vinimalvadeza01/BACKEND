@@ -45,9 +45,6 @@ server.post ('/Endereco', async (req, resp ) => {
             throw new Error('A cidade é obrigatoria')
         }
 
-
-
-
         const rspd= await CEndereco(resposta);
         resp.send(rspd)
     }

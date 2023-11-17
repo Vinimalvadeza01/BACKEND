@@ -4,7 +4,7 @@ export async function CEndereco(resposta){
 
     let comando= 
     `insert into TB_ENDERECO(id_cliente, ds_cep, nm_rua, nm_bairro, ds_numero, ds_complemento, nm_estado, nm_cidade)
-	value(?,?,?,?,0,?,?,?);`
+	values(?,?,?,?,?,?,?,?);`
 
     const [resp]= await connection.query(comando, [
         resposta.cliente,
@@ -17,7 +17,7 @@ export async function CEndereco(resposta){
         resposta.cidade
     ])
 
-    resposta.cliente=resp.insertId;
+    resposta.id=resp.insertId;
 
     return resp;
 }
