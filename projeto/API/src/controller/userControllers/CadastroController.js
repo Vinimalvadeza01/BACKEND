@@ -71,7 +71,7 @@ server.post ('/Cadastro', async (req, resp ) => {
     
     catch (err) 
     {
-        resp.status(404).send({
+        resp.status(401).send({
             erro:err.message
         });
     }

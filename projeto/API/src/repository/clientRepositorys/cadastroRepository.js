@@ -51,5 +51,3 @@ export async function VerificarCpf(cpf){
   const [resp] = await connection.query(cn, [cpf])
   return resp;
 }
-
-
