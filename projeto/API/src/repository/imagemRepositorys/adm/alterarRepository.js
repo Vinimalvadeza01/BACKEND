@@ -3,7 +3,7 @@ import connection from "../../connection.js";
 export async function alterarImagePrincipal(imagem,idProduto,idImagem){
 
     let command=`			
-        update tb_imagem
+        update TB_IMAGEM
             set ds_imagem=?,
                 id_produto=?,
                 nr_posicao=1
@@ -17,7 +17,7 @@ export async function alterarImagePrincipal(imagem,idProduto,idImagem){
 export async function alterarImageSecundaria(imagem,idProduto,posicao,idImagem){
 
     const command=`
-        update tb_imagem
+        update TB_IMAGEM
         set ds_imagem=?,
             id_produto=?,
             nr_posicao=?

@@ -4,10 +4,10 @@ export async function verificarAdm(id){
 
     let command=`
     
-        select ID_ADM     as ID,
-                NM_ADM          as Adm,
-                DS_SENHA        as Senha
-        from tb_login_adm
+        select id_adm     as ID,
+                nm_adm          as Adm,
+                ds_senha        as Senha
+        from TB_LOGIN_ADM
         Where id_adm=?
     `;
 

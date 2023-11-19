@@ -5,7 +5,7 @@ export async function loginAdm(usuario) {
         id_adm      as ID,
         nm_adm   	as 		Adm,	
         ds_senha   		as  	Senha
-        from tb_login_adm
+        from TB_LOGIN_ADM
         where nm_adm=? 
         and ds_senha=?`
             

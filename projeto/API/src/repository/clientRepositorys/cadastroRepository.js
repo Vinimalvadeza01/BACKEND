@@ -31,7 +31,7 @@ export async function VerificarCpf(cpf){
     `
     SELECT id_cliente    as id,
           ds_cpf       as cpf
-  FROM tb_cliente WHERE ds_cpf=?;
+  FROM TB_CLIENTE WHERE ds_cpf=?;
   `
 
   const [resp] = await connection.query(cn, [cpf])

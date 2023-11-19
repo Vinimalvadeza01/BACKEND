@@ -2,11 +2,11 @@ import connection from "../connection.js";
 
 export async function login(emailCPF,senha) {
     const comando = `Select         
-        DS_EMAIL    as Email,
-        DS_CPF        as CPF,
-        DS_SENHA     as Senha
-        from tb_cliente
-        Where DS_EMAIL=?  OR DS_CPF=?
+        ds_email    as Email,
+        ds_cpf        as CPF,
+        ds_senha     as Senha
+        from TB_CLIENTE
+        Where ds_email=?  OR ds_cpf=?
         AND ds_senha=?`
             
     const [linhas] = await connection.query(comando,  [emailCPF, emailCPF,senha]);

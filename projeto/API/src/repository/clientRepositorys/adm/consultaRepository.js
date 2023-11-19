@@ -4,26 +4,26 @@ export async function consultarClientes(filtro){
 
     let comandoBase=`
     
-        Select 	TB_Cliente.ID_cliente 	as ID, 
-        NM_nome 				as Nome, 
-        DS_email 				as Email,
-        DS_cpf 					as CPF,
-        DT_nasc					as Nascimento,
-        DS_senha				as Senha,
-        QTD_pedidos				as Pedidos,
-        TB_cliente.ID_endereco	as Endereco,
-        TB_endereco.ID_endereco as ID_Endereco,
+        Select 	TB_CLIENTE.id_cliente 	as ID, 
+        nm_nome 				as Nome, 
+        ds_email 				as Email,
+        ds_cpf 					as CPF,
+        dt_nasc					as Nascimento,
+        ds_senha				as Senha,
+        qtd_pedidos				as Pedidos,
+        TB_CLIENTE.id_endereco	as Endereco,
+        TB_ENDERECO.id_endereco as id_endereco,
         ds_cep					as CEP,
-        NM_rua					as Rua,
-        NM_bairro				as Bairro,
-        DS_numero				as Número,
-        DS_complemento			as Complemento,
-        NM_estado				as Estado,
-        NM_cidade				as Cidade
+        nm_rua					as Rua,
+        nm_bairro				as Bairro,
+        ds_numero				as Número,
+        ds_complemento			as Complemento,
+        nm_estado				as Estado,
+        nm_cidade				as Cidade
         
-        from TB_cliente
-            Left Join TB_endereco
-                on TB_cliente.ID_cliente=TB_endereco.ID_cliente`;
+        from TB_CLIENTE
+            Left Join TB_ENDERECO
+                on TB_CLIENTE.id_cliente=TB_ENDERECO.id_cliente`;
 
     let comandosWhere=' WHERE ';
     let comandosOrder=' ORDER BY ';
@@ -38,18 +38,18 @@ export async function consultarClientes(filtro){
 
     if(filtro.umPedido){
 
-        colunasWhere[contWhere]=` QTD_pedidos>0`;
+        colunasWhere[contWhere]=` qtd_pedidos>0`;
     }
 
     if(filtro.semPedidos){
 
-        colunasWhere[contWhere]=` QTD_pedidos=0`;
+        colunasWhere[contWhere]=` qtd_pedidos=0`;
         contWhere=contWhere+1;
     }
 
     if(filtro.semEndereco){
 
-        colunasWhere[contWhere]=` TB_cliente.ID_Endereco IS NULL`;
+        colunasWhere[contWhere]=` TB_CLIENTE.id_endereco IS NULL`;
         contWhere=contWhere+1;
     }
 
@@ -58,7 +58,7 @@ export async function consultarClientes(filtro){
         let puxarAno=[];
         puxarAno.push(filtro.ano);
 
-        colunasWhere[contWhere]=` YEAR(DT_nasc)=`+puxarAno[0];
+        colunasWhere[contWhere]=` YEAR(dt_nasc)=`+puxarAno[0];
         contWhere=contWhere+1;
     }
 
@@ -68,7 +68,7 @@ export async function consultarClientes(filtro){
 
         puxarEstado.push(filtro.estado);
 
-        colunasWhere[contWhere]=` NM_estado="`+puxarEstado[0]+'"';
+        colunasWhere[contWhere]=` nm_estado="`+puxarEstado[0]+'"';
         contWhere=contWhere+1;
     }
 
@@ -78,7 +78,7 @@ export async function consultarClientes(filtro){
 
         puxarCidade.push(filtro.cidade);
 
-        colunasWhere[contWhere]=` NM_cidade="`+puxarCidade[0]+'"';
+        colunasWhere[contWhere]=` nm_cidade="`+puxarCidade[0]+'"';
         contWhere=contWhere+1;
     }
 
@@ -88,13 +88,13 @@ export async function consultarClientes(filtro){
 
         puxarCliente.push(filtro.cliente);
 
-        colunasWhere[contWhere]=` NM_nome like('%${puxarCliente[0]}%') OR DS_email like('%${puxarCliente[0]}%') OR DS_cpf like('%${puxarCliente[0]}%')`;
+        colunasWhere[contWhere]=` nm_nome like('%${puxarCliente[0]}%') OR ds_email like('%${puxarCliente[0]}%') OR ds_cpf like('%${puxarCliente[0]}%')`;
     }
 
     // Filtros para o order BY
     if(filtro.maisPedidos){
 
-        colunasOrder[contOrder]=` QTD_pedidos desc`;
+        colunasOrder[contOrder]=` qtd_pedidos desc`;
         contOrder=contOrder+1;
     }
 
@@ -106,13 +106,13 @@ export async function consultarClientes(filtro){
 
     if(filtro.nascimentoMaisNovos){
 
-        colunasOrder[contOrder]=` DT_nasc asc`;
+        colunasOrder[contOrder]=` dt_nasc asc`;
         contOrder=contOrder+1;
     }
 
     if(filtro.nascimentoMaisVelhos){
 
-        colunasOrder[contOrder]=` DT_nasc desc`;
+        colunasOrder[contOrder]=` dt_nasc desc`;
         contOrder=contOrder+1;
     }
 

@@ -10,7 +10,7 @@ export async function consultarCapaProduto(id){
         id_produto 	as Produto, 
         nr_posicao 	as Posição
         
-        from tb_imagem
+        from TB_IMAGEM
         
         Where id_produto=?
         AND nr_posicao=1`;
@@ -30,7 +30,7 @@ export async function consultarImagensSecundariasProduto(id){
         id_produto 	as Produto, 
         nr_posicao 	as Posição
         
-        from tb_imagem
+        from TB_IMAGEM
         
         Where id_produto=?
         AND   nr_posicao>1
@@ -52,7 +52,7 @@ export async function consultarImageSecPosicao(id,posicao){
         id_produto 	as Produto, 
         nr_posicao 	as Posição
         
-        from tb_imagem
+        from TB_IMAGEM
         
         Where id_produto=?
         AND   nr_posicao=?

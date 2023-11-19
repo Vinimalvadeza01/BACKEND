@@ -3,7 +3,7 @@ import connection from "../../connection.js";
 export async function deletarImagensProduto(id){
 
     const command=`
-        DELETE from tb_imagem
+        DELETE from TB_IMAGEM
         WHERE id_produto=?
     `;
 
@@ -15,7 +15,7 @@ export async function deletarImagensProduto(id){
 export async function deletarImagesSec(id,posicao){
 
     const command=`
-        DELETE from tb_imagem
+        DELETE from TB_IMAGEM
         WHERE id_produto=?
         AND   nr_posicao=?
     `;

@@ -4,9 +4,9 @@ export async function verificarCategorias(id){
 
     let command=`
     
-        select ID_CATEGORIA     as ID,
-                DS_CATEGORIA    as Categoria
-        from tb_categoria
+        select id_categoria     as ID,
+                ds_categoria    as Categoria
+        from TB_CATEGORIA
         Where id_categoria=?
     `;
 
@@ -19,9 +19,9 @@ export async function listarCategorias(){
 
     let command=`
     
-        Select  ID_CATEGORIA    as ID,
-                DS_CATEGORIA    as Categoria
-            from tb_categoria
+        Select  id_categoria    as ID,
+                ds_categoria    as Categoria
+            from TB_CATEGORIA
     `;
 
     const [resp]=await connection.query(command,[]);
