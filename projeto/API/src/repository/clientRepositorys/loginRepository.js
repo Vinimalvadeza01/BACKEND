@@ -1,7 +1,8 @@
 import connection from "../connection.js";
 
 export async function login(emailCPF,senha) {
-    const comando = `Select         
+    const comando = `Select    
+        id_cliente  as ID,     
         ds_email    as Email,
         ds_cpf        as CPF,
         ds_senha     as Senha

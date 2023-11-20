@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { login } from "../../repository/clientRepositorys/loginRepository.js";
 import {  Cadastro, VerificarCpf } from "../../repository/clientRepositorys/cadastroRepository.js";
-
+import { linkarEndereco } from "../../repository/clientRepositorys/CadastroEnderecoRepository.js";
 
 const endpoints=Router();
 
@@ -14,40 +14,35 @@ endpoints.post ('/cliente/Cadastro', async (req, resp ) => {
         if(!resposta.nome){
 
             throw new Error('O nome é obrigatório!');
-        
         }
         
         if(!resposta.email){
 
             throw new Error('O email e obrigatorio!');
-        
         }
         
         if(!resposta.cpf){
 
             throw new Error('O cpf é obrigatório!');
-        
         }
         
         if(!resposta.senha){
 
             throw new Error('A senha é obrigatório!');
-        
         }
 
         if(!resposta.nasc){
 
             throw new Error('A data de nascimento é obrigatório!');
-        
         }
         
          // Verifica se o cliente nao esta repetindo dados de outro cliente
          const VerifcCpf =await VerificarCpf(resposta.cpf);
 
-         if(VerifcCpf.length>0){
+        if(VerifcCpf.length>0){
  
-             throw new Error('Já existe um cadastro feito com esse CPF!');
-         }
+            throw new Error('Já existe um cadastro feito com esse CPF!');
+        }
 
         //Confrima senha
         const respsd = await Cadastro(resposta);
@@ -97,6 +92,66 @@ endpoints.post('/usuario/login', async (req, resp) =>{
             erro: err.message
         })
     }   
+});
+
+endpoints.put('/cliente/alterar/endereco', async (req,resp) => {
+
+    try{
+
+        const cliente=req.body;
+
+        if(!cliente.nome){
+
+            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Nome" do cliente não foi encontrada');
+        }
+  
+        if(!cliente.email){
+
+            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Email" do cliente não foi encontrada');
+        }
+
+        if(!cliente.cpf){
+
+            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "CPF" do cliente não foi encontrada');
+        }
+
+        if(!cliente.nasc){
+
+            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Data de Nascimento" do cliente não foi encontrada');
+        }
+
+        if(!cliente.senha){
+
+            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Senha" do cliente não foi encontrada');
+        }
+
+        if(!cliente.endereco){
+
+            throw new Error('Não foi possível associar o cliente ao endereço pois o endereço não existe em nossos registros');
+        }
+
+        if(!cliente.ID){
+
+            throw new Error('Defina para qual cliente está querendo associar este endereço!');
+        }
+
+        const alterarEndereco=linkarEndereco(cliente);
+
+        if(alterarEndereco===0){
+
+            throw new Error('Não foi possível alterar o endereço');
+        }
+
+        resp.send(cliente);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
 });
 
 export default endpoints;

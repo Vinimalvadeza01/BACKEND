@@ -5,7 +5,7 @@ import cors from 'cors';
 import produtoController from './controller/userControllers/produtoController.js';
 import imagemController from './controller/userControllers/imageController.js';
 import clienteController from './controller/userControllers/clienteController.js'
-import CEnderecoController from './controller/userControllers/EnderecoCadastrControler.js'
+import CEnderecoController from './controller/userControllers/enderecoController.js'
 
 import animalController from './controller/controllersGerais/animalController.js';
 import categoriaController from './controller/controllersGerais/categoriaController.js';
