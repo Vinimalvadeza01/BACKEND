@@ -39,21 +39,3 @@ export async function consultarInfsEnderecoPerfil(id){
 
     return resp;
 }
-
-export async function alterarInfsCliente(cliente){
-
-    const command=`       
-        update TB_CLIENTE
-            set nm_nome=?,
-                ds_email=?,
-                ds_cpf=?,
-                dt_nasc=?,
-                ds_senha=?,
-                qtd_pedidos=?,
-                id_endereco=?
-            where id_cliente=?`;
-    
-    const [resp]=await connection.query(command,[]);
-
-    return resp;
-}

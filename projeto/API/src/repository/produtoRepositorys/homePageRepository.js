@@ -87,7 +87,7 @@ export async function consultaMVCachorro(){
 export async function consultaMVGato(){
     const comando = `
     Select  TB_PRODUTO.id_produto AS ID,    
-            nm_imagem  as Capa,
+            ds_imagem  as Capa,
             nm_produto as Nome,
             vl_avaliacao as Avaliação,
             qtd_avaliacoes as Avaliações,

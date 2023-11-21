@@ -20,7 +20,7 @@ export async function alterarCliente(cliente){
 
 export async function alterarEndereco(endereco){
 
-    const command=`
+    const command=` 
         update TB_ENDERECO
             set id_cliente=?,
                 ds_cep=?,

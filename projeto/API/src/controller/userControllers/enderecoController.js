@@ -1,6 +1,7 @@
 import express, {Router } from 'express';
 import{ CEndereco } from '../../repository/clientRepositorys/CadastroEnderecoRepository.js';
 import { consultarInfsEnderecoPerfil } from '../../repository/clientRepositorys/perfilRepository.js';
+import { alterarEndereco } from '../../repository/clientRepositorys/alterarRepository.js';
 
 const server= Router();
 
@@ -101,7 +102,7 @@ server.put('/endereco/alterar', async (req,resp) => {
 
         if(!endereco.rua){
 
-            throw new Error('Não foi possível alterar o endereço, pois o valor da rua antiga não foi identificada');
+            throw new Error('Não foi possível alterar o endereço, pois o valor da rua antiga não foi identificado');
         }
 
         if(!endereco.bairro){
@@ -113,6 +114,30 @@ server.put('/endereco/alterar', async (req,resp) => {
 
             throw new Error('Não foi possível alterar o endereço, pois o valor do número antigo não foi identificado');
         }
+
+        if(!endereco.estado){
+
+            throw new Error('Não foi possível alterar o endereço, pois o valor do estado antigo não foi identificado');
+        }
+
+        if(!endereco.cidade){
+
+            throw new Error('Não foi possível alterar o endereço, pois o valor da cidade antiga não foi identificado');
+        }
+
+        if(!endereco.ID){
+
+            throw new Error('Não foi possível identificar o ID do seu endereço');
+        }
+
+        const alterar=await alterarEndereco(endereco);
+
+        if(alterar===0){
+
+            throw new Error('Não foi possível alterar o produto');
+        }
+
+        resp.send(endereco);
     }
 
     catch(err){
