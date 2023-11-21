@@ -20,5 +20,19 @@ export async function alterarCliente(cliente){
 
 export async function alterarEndereco(endereco){
 
-    
+    const command=`
+        update TB_ENDERECO
+            set id_cliente=?,
+                ds_cep=?,
+                nm_rua=?,
+                nm_bairro=?,
+                ds_numero=?,
+                ds_complemento=?,
+                nm_estado=?,
+                nm_cidade=?
+            WHERE id_endereco=?`;
+
+    const [resp]=await connection.query(command,[endereco.cliente,endereco.cep,endereco.rua,endereco.bairro,endereco.numero,endereco.complemento,endereco.estado,endereco.cidade,endereco.ID]);
+
+    return resp.affectedRows;
 }

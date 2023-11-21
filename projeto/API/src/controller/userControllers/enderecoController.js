@@ -81,4 +81,41 @@ server.get('/endereco/perfil/consulta/:id', async (req,resp) => {
     }
 });
 
+server.put('/endereco/alterar', async (req,resp) => {
+
+    try{
+
+        const endereco=req.body;
+
+        //endereco.bairro,endereco.numero,endereco.complemento,endereco.estado,endereco.cidade,endereco.ID
+        
+        if(!endereco.cliente){
+
+            throw new Error('Não foi possível alterar o endereço, pois o cliente não foi identificado');
+        }
+
+        if(!endereco.cep){
+
+            throw new Error('Não foi possível alterar o endereço, pois o valor do cep antigo não foi identificado');
+        }
+
+        if(!endereco.rua){
+
+            throw new Error('Não foi possível alterar o endereço, pois o valor da rua antiga não foi identificada');
+        }
+
+        if(!endereco.bairro){
+
+            throw new Error('Não foi possível alterar o endereço, pois o valor do bairro antigo não foi identificado');
+        }
+
+        if(!endereco.numero){
+
+            throw new Error('Não foi possível alterar o endereço, pois o valor do número antigo não foi identificado');
+        }
+    }
+
+    catch(err){}
+});
+
 export default server;
