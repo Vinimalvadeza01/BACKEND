@@ -1,5 +1,6 @@
 import express, {Router } from 'express';
 import{ CEndereco } from '../../repository/clientRepositorys/CadastroEnderecoRepository.js';
+import { consultarInfsEnderecoPerfil } from '../../repository/clientRepositorys/perfilRepository.js';
 
 const server= Router();
 
@@ -58,6 +59,26 @@ server.post ('/Endereco', async (req, resp ) => {
         }
     
     
-    })
+});
 
-    export default server;
+server.get('/endereco/perfil/consulta/:id', async (req,resp) => {
+    
+    try{
+
+        const id=req.params.id;
+
+        const [respostaConsulta]=await consultarInfsEnderecoPerfil(id);
+
+        resp.send(respostaConsulta);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+            
+            erro:err.message
+        });
+    }
+});
+
+export default server;

@@ -21,21 +21,3 @@ export async function CEndereco(resposta){
 
     return resp;
 }
-
-export async function linkarEndereco(cliente){
-
-    const command=`
-        update TB_CLIENTE
-            set nm_nome=?,
-                ds_email=?,
-                ds_cpf=?,
-                dt_nasc=?,
-                ds_senha=?,
-                qtd_pedidos=0,
-                id_endereco=?
-            where id_cliente=?`;
-
-    const [resp]=await connection.query(command,[cliente.nome,cliente.email,cliente.cpf,cliente.nasc,cliente.senha,cliente.endereco,cliente.ID]);
-
-    return resp.affectedRows;
-}

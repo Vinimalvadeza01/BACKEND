@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { login } from "../../repository/clientRepositorys/loginRepository.js";
-import {  Cadastro, VerificarCpf } from "../../repository/clientRepositorys/cadastroRepository.js";
-import { linkarEndereco } from "../../repository/clientRepositorys/CadastroEnderecoRepository.js";
+import { Cadastro, VerificarCpf } from "../../repository/clientRepositorys/cadastroRepository.js";
+import { alterarCliente } from "../../repository/clientRepositorys/alterarRepository.js";
+import { consultarInfsPerfil } from "../../repository/clientRepositorys/perfilRepository.js";
 
 const endpoints=Router();
 
@@ -94,7 +95,7 @@ endpoints.post('/usuario/login', async (req, resp) =>{
     }   
 });
 
-endpoints.put('/cliente/alterar/endereco', async (req,resp) => {
+endpoints.put('/cliente/alterar', async (req,resp) => {
 
     try{
 
@@ -102,40 +103,45 @@ endpoints.put('/cliente/alterar/endereco', async (req,resp) => {
 
         if(!cliente.nome){
 
-            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Nome" do cliente não foi encontrada');
+            throw new Error('Não foi possível alterar o cliente pois a informação "Nome" do cliente não foi encontrada');
         }
   
         if(!cliente.email){
 
-            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Email" do cliente não foi encontrada');
+            throw new Error('Não foi possível alterar o cliente pois a informação "Email" do cliente não foi encontrada');
         }
 
         if(!cliente.cpf){
 
-            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "CPF" do cliente não foi encontrada');
+            throw new Error('Não foi possível alterar o cliente pois a informação "CPF" do cliente não foi encontrada');
         }
 
         if(!cliente.nasc){
 
-            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Data de Nascimento" do cliente não foi encontrada');
+            throw new Error('Não foi possível alterar o cliente pois a informação "Data de Nascimento" do cliente não foi encontrada');
         }
 
         if(!cliente.senha){
 
-            throw new Error('Não foi possível associar o cliente ao endereço pois a informação "Senha" do cliente não foi encontrada');
+            throw new Error('Não foi possível alterar o cliente pois a informação "Senha" do cliente não foi encontrada');
+        }
+
+        if(!cliente.pedidos){
+
+            throw new Error('Não foi possível alterar o cliente pois a informação "Quantidade de Pedidos" do cliente não foi encontrada');
         }
 
         if(!cliente.endereco){
 
-            throw new Error('Não foi possível associar o cliente ao endereço pois o endereço não existe em nossos registros');
+            throw new Error('Não foi possível alterar o cliente pois o endereço não existe em nossos registros');
         }
 
         if(!cliente.ID){
 
-            throw new Error('Defina para qual cliente está querendo associar este endereço!');
+            throw new Error('Defina qual cliente está querendo alterar as informações!');
         }
 
-        const alterarEndereco=linkarEndereco(cliente);
+        const alterarEndereco=alterarCliente(cliente);
 
         if(alterarEndereco===0){
 
@@ -143,6 +149,26 @@ endpoints.put('/cliente/alterar/endereco', async (req,resp) => {
         }
 
         resp.send(cliente);
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoints.get('/cliente/perfil/consulta/:id', async (req,resp) => {
+
+    try{
+        
+        const id=req.params.id;
+
+        const [respostaConsulta]=await consultarInfsPerfil(id);
+
+        resp.send(respostaConsulta);
     }
 
     catch(err){
