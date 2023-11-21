@@ -115,7 +115,13 @@ server.put('/endereco/alterar', async (req,resp) => {
         }
     }
 
-    catch(err){}
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
 });
 
 export default server;
