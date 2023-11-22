@@ -126,7 +126,7 @@ endpoints.put('/cliente/alterar', async (req,resp) => {
             throw new Error('Não foi possível alterar o cliente pois a informação "Senha" do cliente não foi encontrada');
         }
 
-        if(!cliente.pedidos){
+        if(cliente.pedidos===undefined){
 
             throw new Error('Não foi possível alterar o cliente pois a informação "Quantidade de Pedidos" do cliente não foi encontrada');
         }
