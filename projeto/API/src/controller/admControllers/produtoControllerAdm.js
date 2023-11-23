@@ -152,7 +152,7 @@ endpoints.get('/produto/ultimoProduto', async (req,resp) => {
 
     try{
 
-        const resposta=await ultimoProduto();
+        const [resposta]=await ultimoProduto();
 
         resp.send(resposta);
     }
